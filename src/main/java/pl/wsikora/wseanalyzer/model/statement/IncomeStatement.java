@@ -107,4 +107,22 @@ public class IncomeStatement extends Statement {
     }
 
 
+
+    @Override
+    public String toString() {
+        return "IncomeStatement{" +
+                "id=" + getId() +
+                ", company=" + getCompany() +
+                ", date=" + getDate() +
+                ", revenue=" + revenue +
+                ", goodsSoldCosts=" + goodsSoldCosts +
+                ", sellingCosts=" + sellingCosts +
+                ", administrativeCosts=" + administrativeCosts +
+                ", profit=" + profit +
+                ", operatingIncome=" + operatingIncome +
+                ", incomeBeforeTaxes=" + incomeBeforeTaxes +
+                ", netIncome=" + netIncome +
+                '}';
+    }
+
 }

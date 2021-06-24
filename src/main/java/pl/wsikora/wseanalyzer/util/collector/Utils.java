@@ -11,7 +11,7 @@ import static pl.wsikora.wseanalyzer.util.collector.CollectorValues.timeout;
 
 public class Utils {
 
-    static Document getDocument(String url) {
+    protected static Document getDocument(String url) {
         try {
             return Jsoup.parse(new URL(url), timeout);
         } catch (IOException e) {
@@ -20,7 +20,7 @@ public class Utils {
         }
     }
 
-    static LocalDate formDate(String date) {
+    protected static LocalDate formDate(String date) {
         int year = Integer.parseInt(date.replaceAll("\\D+", "")) + 2000;
         if (date.contains("mar")) {
             return LocalDate.of(year, 3, 1);

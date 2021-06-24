@@ -14,9 +14,15 @@ import static pl.wsikora.wseanalyzer.util.collector.Utils.getDocument;
 
 public abstract class StatementCollector {
     private final Elements table;
+    private final int columnsNumber;
 
     protected StatementCollector(String url) {
         this.table = getDocument(url).select(TABLE_CSS_QUERY);
+        this.columnsNumber = table.select(TABLE_DATE_CSS_QUERY).size();
+    }
+
+    protected int size() {
+        return columnsNumber;
     }
 
     protected Optional<LocalDate> extractDate(int index) {
@@ -24,14 +30,14 @@ public abstract class StatementCollector {
     }
 
     protected Optional<Long> extractValue(Elements tableRow, int index) {
-        return extractSingle(tableRow, index, e -> Long.parseLong(e.text().replaceAll("\\s", "")));
+        return extractSingle(tableRow, index, e -> Long.parseLong(e.text().replaceAll("\\s", "")) * 1000);
     }
 
     protected void setSingleValue(String dataField, int index, Consumer<Long> consumer) {
         extractValue(getTableRow(dataField), index).ifPresent(consumer);
     }
 
-    protected void setDateA(int index, Consumer<LocalDate> consumer) {
+    protected void setDate(int index, Consumer<LocalDate> consumer) {
         extractDate(index).ifPresent(consumer);
     }
 
@@ -53,7 +59,5 @@ public abstract class StatementCollector {
         }
         return Optional.empty();
     }
-
-
 
 }

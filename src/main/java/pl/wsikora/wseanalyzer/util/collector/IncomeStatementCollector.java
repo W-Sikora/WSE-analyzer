@@ -7,33 +7,37 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static pl.wsikora.wseanalyzer.util.collector.CollectorValues.URL_PATTERN;
+import static pl.wsikora.wseanalyzer.util.collector.CollectorValues.INCOME_STATEMENT_URL;
+
 public class IncomeStatementCollector extends StatementCollector {
     private final Company company;
 
     public IncomeStatementCollector(Company company) {
-        super(" ");
+        super(String.format(URL_PATTERN, INCOME_STATEMENT_URL, company.getBusinessRadarAcronym()));
         this.company = company;
     }
 
-    public List<IncomeStatement> getAll() {
-        return IntStream.range(0, 1)
+    public List<IncomeStatement> getPart(int elementsNumber) {
+        int end = size();
+        int start = Math.max(end - elementsNumber, 0);
+        return IntStream.range(start, end)
                 .mapToObj(this::form)
                 .collect(Collectors.toList());
     }
 
     public IncomeStatement getLatest() {
-        return form(9);
+        return form(size() - 1);
     }
 
     public IncomeStatement get(int index) {
         return form(index);
     }
 
-
     private IncomeStatement form(int index) {
         IncomeStatement statement = new IncomeStatement();
         statement.setCompany(company);
-        setDateA(index, statement::setDate);
+        setDate(index, statement::setDate);
         setSingleValue("IncomeRevenues", index, statement::setRevenue);
         setSingleValue("IncomeCostOfSales", index, statement::setGoodsSoldCosts);
         setSingleValue("IncomeDistributionExpenses", index, statement::setSellingCosts);
@@ -44,6 +48,5 @@ public class IncomeStatementCollector extends StatementCollector {
         setSingleValue("IncomeNetProfit", index, statement::setNetIncome);
         return statement;
     }
-
 
 }

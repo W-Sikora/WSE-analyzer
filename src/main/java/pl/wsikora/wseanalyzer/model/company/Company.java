@@ -18,16 +18,11 @@ public class Company {
 
     private String ticker;
 
-    private String acronym;
+    private String businessRadarAcronym;
+
+    private String bankerAcronym;
 
     public Company() {
-    }
-
-    public Company(String name, String isin, String ticker, String acronym) {
-        this.name = name;
-        this.isin = isin;
-        this.ticker = ticker;
-        this.acronym = acronym;
     }
 
     public Long getId() {
@@ -62,12 +57,20 @@ public class Company {
         this.ticker = ticker;
     }
 
-    public String getAcronym() {
-        return acronym;
+    public String getBusinessRadarAcronym() {
+        return businessRadarAcronym;
     }
 
-    public void setAcronym(String acronym) {
-        this.acronym = acronym;
+    public void setBusinessRadarAcronym(String businessRadarAcronym) {
+        this.businessRadarAcronym = businessRadarAcronym;
+    }
+
+    public String getBankerAcronym() {
+        return bankerAcronym;
+    }
+
+    public void setBankerAcronym(String bankerAcronym) {
+        this.bankerAcronym = bankerAcronym;
     }
 
     @Override
@@ -79,12 +82,13 @@ public class Company {
                 Objects.equals(name, company.name) &&
                 Objects.equals(isin, company.isin) &&
                 Objects.equals(ticker, company.ticker) &&
-                Objects.equals(acronym, company.acronym);
+                Objects.equals(businessRadarAcronym, company.businessRadarAcronym) &&
+                Objects.equals(bankerAcronym, company.bankerAcronym);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, isin, ticker, acronym);
+        return Objects.hash(id, name, isin, ticker, businessRadarAcronym, bankerAcronym);
     }
 
     @Override
@@ -94,7 +98,8 @@ public class Company {
                 ", name='" + name + '\'' +
                 ", isin='" + isin + '\'' +
                 ", ticker='" + ticker + '\'' +
-                ", acronym='" + acronym + '\'' +
+                ", businessRadarAcronym='" + businessRadarAcronym + '\'' +
+                ", bankerAcronym='" + bankerAcronym + '\'' +
                 '}';
     }
 

@@ -51,5 +51,4 @@ public abstract class Statement {
     public void setDate(LocalDate date) {
         this.date = date;
     }
-
 }
