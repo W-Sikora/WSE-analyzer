@@ -5,6 +5,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "activity_ratios")
-public class ActivityRatios extends Ratio {
+public class ActivityRatio extends Ratio {
 
 }
