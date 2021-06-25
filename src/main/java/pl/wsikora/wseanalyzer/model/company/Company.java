@@ -1,7 +1,9 @@
 package pl.wsikora.wseanalyzer.model.company;
 
+import pl.wsikora.wseanalyzer.model.company.general.CompanyGeneralInfo;
+import pl.wsikora.wseanalyzer.model.company.info.CompanyInfo;
+
 import javax.persistence.*;
-import java.util.Objects;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -21,6 +23,12 @@ public class Company {
     private String businessRadarAcronym;
 
     private String bankerAcronym;
+
+    @OneToOne(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private CompanyGeneralInfo companyGeneralInfo;
+
+    @OneToOne(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private CompanyInfo companyInfo;
 
     public Company() {
     }
@@ -73,34 +81,19 @@ public class Company {
         this.bankerAcronym = bankerAcronym;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Company company = (Company) o;
-        return Objects.equals(id, company.id) &&
-                Objects.equals(name, company.name) &&
-                Objects.equals(isin, company.isin) &&
-                Objects.equals(ticker, company.ticker) &&
-                Objects.equals(businessRadarAcronym, company.businessRadarAcronym) &&
-                Objects.equals(bankerAcronym, company.bankerAcronym);
+    public CompanyGeneralInfo getCompanyGeneralInfo() {
+        return companyGeneralInfo;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, isin, ticker, businessRadarAcronym, bankerAcronym);
+    public void setCompanyGeneralInfo(CompanyGeneralInfo companyGeneralInfo) {
+        this.companyGeneralInfo = companyGeneralInfo;
     }
 
-    @Override
-    public String toString() {
-        return "Company{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", isin='" + isin + '\'' +
-                ", ticker='" + ticker + '\'' +
-                ", businessRadarAcronym='" + businessRadarAcronym + '\'' +
-                ", bankerAcronym='" + bankerAcronym + '\'' +
-                '}';
+    public CompanyInfo getCompanyInfo() {
+        return companyInfo;
     }
 
+    public void setCompanyInfo(CompanyInfo companyInfo) {
+        this.companyInfo = companyInfo;
+    }
 }

@@ -16,7 +16,7 @@ public class CompanyInfo {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "company_id")
     private Company company;
 
