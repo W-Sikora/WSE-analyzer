@@ -1,7 +1,6 @@
 package pl.wsikora.wseanalyzer.dto.company;
 
 import pl.wsikora.wseanalyzer.model.company.Company;
-import pl.wsikora.wseanalyzer.model.company.general.CompanyGeneralInfo;
 import pl.wsikora.wseanalyzer.model.company.info.ActivityTag;
 import pl.wsikora.wseanalyzer.model.company.info.CompanyInfo;
 
