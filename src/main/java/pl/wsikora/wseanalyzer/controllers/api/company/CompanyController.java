@@ -5,39 +5,38 @@ import org.springframework.web.bind.annotation.*;
 import pl.wsikora.wseanalyzer.dto.company.CompanyDTO;
 import pl.wsikora.wseanalyzer.model.company.Company;
 
-import java.util.List;
 
 @RestController
-@RequestMapping("/companies")
+@RequestMapping(value = "api/v1/companies", produces = "application/json")
 public class CompanyController {
 
     @GetMapping
-    public List<Company> getAll() {
+    public ResponseEntity<?> getAll() {
         throw new IllegalArgumentException("not implemented yet");
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CompanyDTO> getOne(@PathVariable long id) {
+    public ResponseEntity<?> getOne(@PathVariable long id) {
         throw new IllegalArgumentException("not implemented yet");
     }
 
     @GetMapping("/{id}/general")
-    public ResponseEntity<CompanyDTO> getGeneralInfo(@PathVariable long id) {
+    public ResponseEntity<?> getGeneralInfo(@PathVariable long id) {
         throw new IllegalArgumentException("not implemented yet");
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestBody Company company) {
+    public ResponseEntity<?> create(@RequestBody Company company) {
         throw new IllegalArgumentException("not implemented yet");
     }
 
     @PutMapping("/{id}")
-    public Company update(@PathVariable long id, @RequestBody Company company) {
+    public ResponseEntity<?> update(@PathVariable long id, @RequestBody Company company) {
         throw new IllegalArgumentException("not implemented yet");
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable long id) {
+    public ResponseEntity<?> delete(@PathVariable long id) {
         throw new IllegalArgumentException("not implemented yet");
     }
 

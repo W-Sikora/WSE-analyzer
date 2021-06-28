@@ -1,12 +1,12 @@
-package pl.wsikora.wseanalyzer.controllers.api.dividend;
+package pl.wsikora.wseanalyzer.controllers.api.statement;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.wsikora.wseanalyzer.model.dividend.Dividend;
+import pl.wsikora.wseanalyzer.model.price.Price;
 
 @RestController
-@RequestMapping(value = "/api/v1/dividends")
-public class DividendController {
+@RequestMapping(value = "/api/v1/balance_sheets")
+public class BalanceSheetController {
 
     @GetMapping(produces = "application/json")
     public ResponseEntity<?> getAll() {
@@ -39,12 +39,12 @@ public class DividendController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody Dividend dividend) {
+    public ResponseEntity<?> create(@RequestBody Price price) {
         throw new IllegalArgumentException("not implemented yet");
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable long id, @RequestBody Dividend dividend) {
+    public ResponseEntity<?> update(@PathVariable long id, @RequestBody Price price) {
         throw new IllegalArgumentException("not implemented yet");
     }
 
