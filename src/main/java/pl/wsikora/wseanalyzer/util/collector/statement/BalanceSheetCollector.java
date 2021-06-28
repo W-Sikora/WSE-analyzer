@@ -3,10 +3,6 @@ package pl.wsikora.wseanalyzer.util.collector.statement;
 import pl.wsikora.wseanalyzer.model.company.Company;
 import pl.wsikora.wseanalyzer.model.statement.BalanceSheet;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import static pl.wsikora.wseanalyzer.util.collector.statement.CollectorValues.*;
 
 public class BalanceSheetCollector extends StatementCollector {
@@ -17,21 +13,23 @@ public class BalanceSheetCollector extends StatementCollector {
         this.company = company;
     }
 
-    protected BalanceSheet form(int index) {
+    @Override
+    public BalanceSheet form(int index) {
         BalanceSheet balanceSheet = new BalanceSheet();
         balanceSheet.setCompany(company);
         setDate(index, balanceSheet::setDate);
-//        setSingleValue("", index, balanceSheet::);
+        setSingleValue("BalanceNoncurrentAssets", index, balanceSheet::setFixedAsset);
+        setSingleValue("BalanceCurrentAssets", index, balanceSheet::setCurrentAsset);
+        setSingleValue("BalanceTotalAssets", index, balanceSheet::setTotalAssets);
+        setSingleValue("BalanceCurrentReceivables", index, balanceSheet::setCurrentReceivables);
+        setSingleValue("BalanceCurrentInvestments", index, balanceSheet::setCurrentInvestments);
+        setSingleValue("BalanceCash", index, balanceSheet::setCashAndEquivalents);
+        setSingleValue("BalanceCapital", index, balanceSheet::setShareholdersEquity);
+        setSingleValue("BalanceNoncurrentLiabilities", index, balanceSheet::setLongTermLiabilities);
+        setSingleValue("BalanceCurrentLiabilities", index, balanceSheet::setCurrentLiabilities);
+        setSingleValue("BalanceTotalEquityAndLiabilities", index, balanceSheet::setTotalLiabilitiesAndEquity);
         return balanceSheet;
     }
 
-    @Override
-    public List<BalanceSheet> getPart(int elementsNumber) {
-        int end = size();
-        int start = Math.max(end - elementsNumber, 0);
-        return IntStream.range(start, end)
-                .mapToObj(this::form)
-                .collect(Collectors.toList());
-    }
 
 }

@@ -18,7 +18,8 @@ public class IncomeStatementCollector extends StatementCollector {
         this.company = company;
     }
 
-    protected IncomeStatement form(int index) {
+    @Override
+    public IncomeStatement form(int index) {
         IncomeStatement statement = new IncomeStatement();
         statement.setCompany(company);
         setDate(index, statement::setDate);
@@ -31,22 +32,6 @@ public class IncomeStatementCollector extends StatementCollector {
         setSingleValue("IncomeBeforeTaxProfit", index, statement::setIncomeBeforeTaxes);
         setSingleValue("IncomeNetProfit", index, statement::setNetIncome);
         return statement;
-    }
-
-    public static void main(String[] args) {
-        Company company = new Company();
-        company.setBusinessRadarAcronym("PKN-ORLEN");
-        IncomeStatementCollector collector = new IncomeStatementCollector(company);
-        collector.getPart(12).forEach(System.out::println);
-    }
-
-    @Override
-    public List<IncomeStatement> getPart(int elementsNumber) {
-        int end = size();
-        int start = Math.max(end - elementsNumber, 0);
-        return IntStream.range(start, end)
-                .mapToObj(this::form)
-                .collect(Collectors.toList());
     }
 
 }

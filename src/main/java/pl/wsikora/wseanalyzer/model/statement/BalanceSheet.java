@@ -110,4 +110,20 @@ public class BalanceSheet extends Statement {
     public void setTotalLiabilitiesAndEquity(Long totalLiabilitiesAndEquity) {
         this.totalLiabilitiesAndEquity = totalLiabilitiesAndEquity;
     }
+
+    @Override
+    public String toString() {
+        return "BalanceSheet{" +
+                "fixedAsset=" + fixedAsset +
+                ", currentAsset=" + currentAsset +
+                ", totalAssets=" + totalAssets +
+                ", currentReceivables=" + currentReceivables +
+                ", currentInvestments=" + currentInvestments +
+                ", cashAndEquivalents=" + cashAndEquivalents +
+                ", shareholdersEquity=" + shareholdersEquity +
+                ", longTermLiabilities=" + longTermLiabilities +
+                ", currentLiabilities=" + currentLiabilities +
+                ", totalLiabilitiesAndEquity=" + totalLiabilitiesAndEquity +
+                '}';
+    }
 }

@@ -19,26 +19,6 @@ public class PopularityController {
         throw new IllegalArgumentException("not implemented yet");
     }
 
-    @GetMapping(path = "/industries/{industryId}", produces = "application/json")
-    public ResponseEntity<?> getAllByIndustry(@PathVariable long industryId) {
-        throw new IllegalArgumentException("not implemented yet");
-    }
-
-    @GetMapping(path = "/activity_tags/{activityTagId}", produces = "application/json")
-    public ResponseEntity<?> getAllByActivityTag(@PathVariable long activityTagId) {
-        throw new IllegalArgumentException("not implemented yet");
-    }
-
-    @GetMapping(path = "/stock_exchanges/{stockExchangeId}", produces = "application/json")
-    public ResponseEntity<?> getAllByStockExchange(@PathVariable long stockExchangeId) {
-        throw new IllegalArgumentException("not implemented yet");
-    }
-
-    @GetMapping("/companies/{companyId}")
-    public ResponseEntity<?> getAllByCompany(@PathVariable long companyId) {
-        throw new IllegalArgumentException("not implemented yet");
-    }
-
     @PostMapping
     public ResponseEntity<?> create(@RequestBody Popularity popularity) {
         throw new IllegalArgumentException("not implemented yet");

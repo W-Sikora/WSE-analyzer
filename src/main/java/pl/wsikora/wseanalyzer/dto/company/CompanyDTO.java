@@ -56,5 +56,4 @@ public class CompanyDTO {
         return activityTags;
     }
 
-
 }
