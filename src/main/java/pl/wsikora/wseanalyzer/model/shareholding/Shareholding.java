@@ -31,13 +31,6 @@ public class Shareholding {
     public Shareholding() {
     }
 
-    public Shareholding(Company company, Shareholder shareholder, Long sharesHeld, LocalDate updateDate) {
-        this.company = company;
-        this.shareholder = shareholder;
-        this.sharesHeld = sharesHeld;
-        this.updateDate = updateDate;
-    }
-
     public Long getId() {
         return id;
     }
