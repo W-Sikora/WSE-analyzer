@@ -1,12 +1,8 @@
 package pl.wsikora.wseanalyzer.controllers.collector;
 
-import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.wsikora.wseanalyzer.services.CompanyService;
-import pl.wsikora.wseanalyzer.util.collector.Utils;
-
-import java.util.List;
+import pl.wsikora.wseanalyzer.services.company.CompanyService;
 
 @Controller
 @RequestMapping("/")

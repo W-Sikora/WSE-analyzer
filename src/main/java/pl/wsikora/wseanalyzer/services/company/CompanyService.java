@@ -1,4 +1,4 @@
-package pl.wsikora.wseanalyzer.services;
+package pl.wsikora.wseanalyzer.services.company;
 
 import pl.wsikora.wseanalyzer.model.company.Company;
 
