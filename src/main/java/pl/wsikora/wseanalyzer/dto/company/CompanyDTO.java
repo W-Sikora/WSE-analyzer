@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CompanyDTO {
-    private final Long id;
+    private final long id;
     private final String name;
     private final String isin;
     private final String ticker;

@@ -46,4 +46,10 @@ public enum  Industry {
     Industry(String name) {
     }
 
+    public String getName() {
+       return this.name();
+    }
+
+
+
 }
