@@ -8,12 +8,12 @@ import pl.wsikora.wseanalyzer.model.company.general.CompanyGeneralInfo;
 import pl.wsikora.wseanalyzer.model.company.info.CompanyInfo;
 import pl.wsikora.wseanalyzer.model.company.info.Industry;
 import pl.wsikora.wseanalyzer.model.company.info.StockExchange;
-import pl.wsikora.wseanalyzer.util.collector.Utils;
+import pl.wsikora.wseanalyzer.util.document.URLDocument;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
-import static pl.wsikora.wseanalyzer.util.collector.Utils.dateFormatter;
+import static pl.wsikora.wseanalyzer.util.date.DateParser.dateFormatter;
 
 public class CompanyCollector {
     private final Document document;
@@ -22,7 +22,7 @@ public class CompanyCollector {
     private final String businessRadarAcronym;
 
     public CompanyCollector(String url, String businessRadarAcronym) {
-        this.document = Utils.getDocument(url);
+        this.document = URLDocument.getDocument(url);
         this.profileSummary = document.select("#left-content div[class=box-left] table[class=profileSummary]");
         this.profileSummary2 = document.select("#left-content div[class=box-left] table[class=class=profileSummary hidden]");
         this.businessRadarAcronym = businessRadarAcronym;

@@ -10,9 +10,9 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import static pl.wsikora.wseanalyzer.util.collector.statement.CollectorValues.*;
-import static pl.wsikora.wseanalyzer.util.collector.Utils.formDate;
-import static pl.wsikora.wseanalyzer.util.collector.Utils.getDocument;
+import static pl.wsikora.wseanalyzer.util.collector.statement.StatementCollectorValues.*;
+import static pl.wsikora.wseanalyzer.util.date.DateParser.formDate;
+import static pl.wsikora.wseanalyzer.util.document.URLDocument.getDocument;
 
 public abstract class StatementCollector {
     private final Elements table;

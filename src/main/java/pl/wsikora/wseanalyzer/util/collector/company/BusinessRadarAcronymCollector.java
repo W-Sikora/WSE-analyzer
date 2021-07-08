@@ -1,6 +1,7 @@
-package pl.wsikora.wseanalyzer.util.collector;
+package pl.wsikora.wseanalyzer.util.collector.company;
 
 import org.jsoup.nodes.Element;
+import pl.wsikora.wseanalyzer.util.document.URLDocument;
 
 import java.util.Collection;
 import java.util.List;
@@ -20,7 +21,7 @@ public class BusinessRadarAcronymCollector {
     }
 
     private static List<String> collect(String url) {
-        return Utils.getDocument(url)
+        return URLDocument.getDocument(url)
                 .select(CSS_QUERY)
                 .stream()
                 .map(BusinessRadarAcronymCollector::getAcronym)

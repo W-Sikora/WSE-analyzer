@@ -1,24 +1,12 @@
-package pl.wsikora.wseanalyzer.util.collector;
+package pl.wsikora.wseanalyzer.util.date;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
-import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Utils {
-    private static final int timeout = 5_000;
+public class DateParser {
     public static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
-    public static Document getDocument(String url) {
-        try {
-            return Jsoup.parse(new URL(url), timeout);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return Jsoup.parse("");
-        }
+    private DateParser() {
     }
 
     public static LocalDate formDate(String date) {
@@ -34,5 +22,6 @@ public class Utils {
         }
         return LocalDate.now();
     }
+
 
 }

@@ -3,7 +3,7 @@ package pl.wsikora.wseanalyzer.util.collector.statement;
 import pl.wsikora.wseanalyzer.model.company.Company;
 import pl.wsikora.wseanalyzer.model.statement.BalanceSheet;
 
-import static pl.wsikora.wseanalyzer.util.collector.statement.CollectorValues.*;
+import static pl.wsikora.wseanalyzer.util.collector.statement.StatementCollectorValues.*;
 
 public class BalanceSheetCollector extends StatementCollector {
     private final Company company;
