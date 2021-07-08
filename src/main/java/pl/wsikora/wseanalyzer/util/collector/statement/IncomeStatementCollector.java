@@ -3,8 +3,8 @@ package pl.wsikora.wseanalyzer.util.collector.statement;
 import pl.wsikora.wseanalyzer.model.company.Company;
 import pl.wsikora.wseanalyzer.model.statement.IncomeStatement;
 
-import static pl.wsikora.wseanalyzer.util.collector.statement.StatementCollectorValues.URL_PATTERN;
-import static pl.wsikora.wseanalyzer.util.collector.statement.StatementCollectorValues.INCOME_STATEMENT_URL;
+import static pl.wsikora.wseanalyzer.util.collector.CollectorValues.URL_PATTERN;
+import static pl.wsikora.wseanalyzer.util.collector.CollectorValues.INCOME_STATEMENT_URL;
 
 public class IncomeStatementCollector extends StatementCollector {
     private final Company company;

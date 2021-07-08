@@ -21,7 +21,7 @@ public class BusinessRadarAcronymCollector {
     }
 
     private static List<String> collect(String url) {
-        return URLDocument.getDocument(url)
+        return URLDocument.get(url)
                 .select(CSS_QUERY)
                 .stream()
                 .map(BusinessRadarAcronymCollector::getAcronym)

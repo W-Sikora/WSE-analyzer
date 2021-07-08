@@ -2,6 +2,7 @@ package pl.wsikora.wseanalyzer.util.collector.statement;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import pl.wsikora.wseanalyzer.util.document.URLDocument;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,16 +11,15 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import static pl.wsikora.wseanalyzer.util.collector.statement.StatementCollectorValues.*;
+import static pl.wsikora.wseanalyzer.util.collector.CollectorValues.*;
 import static pl.wsikora.wseanalyzer.util.date.DateParser.formDate;
-import static pl.wsikora.wseanalyzer.util.document.URLDocument.getDocument;
 
 public abstract class StatementCollector {
     private final Elements table;
     private final int columnsNumber;
 
     protected StatementCollector(String url) {
-        this.table = getDocument(url).select(TABLE_CSS_QUERY);
+        this.table = URLDocument.get(url).select(TABLE_CSS_QUERY);
         this.columnsNumber = table.select(TABLE_DATE_CSS_QUERY).size();
     }
 

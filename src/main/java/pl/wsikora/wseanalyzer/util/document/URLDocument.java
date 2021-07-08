@@ -12,7 +12,7 @@ public class URLDocument {
     private URLDocument() {
     }
 
-    public static Document getDocument(String url) {
+    public static Document get(String url) {
         try {
             return Jsoup.parse(new URL(url), timeout);
         } catch (IOException e) {

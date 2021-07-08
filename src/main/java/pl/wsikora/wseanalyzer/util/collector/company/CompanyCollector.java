@@ -22,7 +22,7 @@ public class CompanyCollector {
     private final String businessRadarAcronym;
 
     public CompanyCollector(String url, String businessRadarAcronym) {
-        this.document = URLDocument.getDocument(url);
+        this.document = URLDocument.get(url);
         this.profileSummary = document.select("#left-content div[class=box-left] table[class=profileSummary]");
         this.profileSummary2 = document.select("#left-content div[class=box-left] table[class=class=profileSummary hidden]");
         this.businessRadarAcronym = businessRadarAcronym;
