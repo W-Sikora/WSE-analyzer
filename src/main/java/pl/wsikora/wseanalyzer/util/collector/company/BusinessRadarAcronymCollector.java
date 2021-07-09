@@ -8,9 +8,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static pl.wsikora.wseanalyzer.util.collector.CollectorValues.WSE_BUSINESS_RADAR_ACRONYM_URL;
+import static pl.wsikora.wseanalyzer.util.collector.CollectorValues.NC_BUSINESS_RADAR_ACRONYM_URL;
+
 public class BusinessRadarAcronymCollector {
-    private static final String WSE_BUSINESS_RADAR_ACRONYM_URL = "https://www.biznesradar.pl/gielda/akcje_gpw";
-    private static final String NC_BUSINESS_RADAR_ACRONYM_URL = "https://www.biznesradar.pl/gielda/newconnect";
     private static final String CSS_QUERY = "table[class=qTableFull] tr[id^=qtable-s-] a[class^=s_tt s_tt_sname_]";
     private static final String targetToReplaced = "/notowania/";
 

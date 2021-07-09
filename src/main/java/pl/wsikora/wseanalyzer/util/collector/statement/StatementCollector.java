@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static pl.wsikora.wseanalyzer.util.collector.CollectorValues.*;
-import static pl.wsikora.wseanalyzer.util.date.DateParser.formDate;
+import static pl.wsikora.wseanalyzer.util.date.DateParser.parseStatementDate;
 
 public abstract class StatementCollector {
     private final Elements table;
@@ -47,7 +47,7 @@ public abstract class StatementCollector {
     }
 
     protected Optional<LocalDate> extractDate(int index) {
-        return extractSingle(getTableDate(), index, e -> formDate(e.text().split("\\(")[1]));
+        return extractSingle(getTableDate(), index, e -> parseStatementDate(e.text().split("\\(")[1]));
     }
 
     protected Optional<Long> extractValue(Elements tableRow, int index) {

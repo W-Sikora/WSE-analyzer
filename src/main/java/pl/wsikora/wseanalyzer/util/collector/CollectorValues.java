@@ -9,6 +9,8 @@ public class CollectorValues {
     public static final String TABLE_DATE_CSS_QUERY = "th[class^=thq h]";
     public static final String TABLE_ROW_CSS_QUERY = "tr[data-field=%s] td[class^=h] span.value span.pv span";
     public static final String BANKER_ACRONYMS_URL = "https://www.bankier.pl/gielda/notowania/ranking-popularnosci?start=%s";
+    public static final String WSE_BUSINESS_RADAR_ACRONYM_URL = "https://www.biznesradar.pl/gielda/akcje_gpw";
+    public static final String NC_BUSINESS_RADAR_ACRONYM_URL = "https://www.biznesradar.pl/gielda/newconnect";
 
     private CollectorValues() {
     }

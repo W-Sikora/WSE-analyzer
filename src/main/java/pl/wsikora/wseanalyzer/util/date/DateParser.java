@@ -9,7 +9,7 @@ public class DateParser {
     private DateParser() {
     }
 
-    public static LocalDate formDate(String date) {
+    public static LocalDate parseStatementDate(String date) {
         int year = Integer.parseInt(date.replaceAll("\\D+", "")) + 2000;
         if (date.contains("mar")) {
             return LocalDate.of(year, 3, 1);
