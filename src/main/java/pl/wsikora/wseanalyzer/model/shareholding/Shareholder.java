@@ -2,6 +2,8 @@ package pl.wsikora.wseanalyzer.model.shareholding;
 
 import javax.persistence.*;
 
+import java.util.Objects;
+
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
@@ -15,10 +17,6 @@ public class Shareholder {
     private String name;
 
     public Shareholder() {
-    }
-
-    public Shareholder(String name) {
-        this.name = name;
     }
 
     public Long getId() {
@@ -35,6 +33,28 @@ public class Shareholder {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Shareholder that = (Shareholder) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
+
+    @Override
+    public String toString() {
+        return "Shareholder{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 
 }

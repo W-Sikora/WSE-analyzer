@@ -1,10 +1,9 @@
 package pl.wsikora.wseanalyzer.model.statement;
 
-import pl.wsikora.wseanalyzer.model.company.Company;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "income_statements")
@@ -12,34 +11,28 @@ public class IncomeStatement extends Statement {
 
     private Long revenue;
 
+    @Column(name = "goods_sold_costs")
     private Long goodsSoldCosts;
 
+    @Column(name = "selling_costs")
     private Long sellingCosts;
 
+    @Column(name = "administrative_costs")
     private Long administrativeCosts;
 
     private Long profit;
 
+    @Column(name = "operating_income")
     private Long operatingIncome;
 
+    @Column(name = "income_before_taxes")
     private Long incomeBeforeTaxes;
 
+    @Column(name = "net_income")
     private Long netIncome;
 
     public IncomeStatement() {
         super();
-    }
-
-    public IncomeStatement(Company company, LocalDate date, Long revenue, Long goodsSoldCosts, Long sellingCosts, Long administrativeCosts, Long profit, Long operatingIncome, Long incomeBeforeTaxes, Long netIncome) {
-        super(company, date);
-        this.revenue = revenue;
-        this.goodsSoldCosts = goodsSoldCosts;
-        this.sellingCosts = sellingCosts;
-        this.administrativeCosts = administrativeCosts;
-        this.profit = profit;
-        this.operatingIncome = operatingIncome;
-        this.incomeBeforeTaxes = incomeBeforeTaxes;
-        this.netIncome = netIncome;
     }
 
     public Long getRevenue() {
@@ -106,7 +99,25 @@ public class IncomeStatement extends Statement {
         this.netIncome = netIncome;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        IncomeStatement that = (IncomeStatement) o;
+        return Objects.equals(revenue, that.revenue) &&
+                Objects.equals(goodsSoldCosts, that.goodsSoldCosts) &&
+                Objects.equals(sellingCosts, that.sellingCosts) &&
+                Objects.equals(administrativeCosts, that.administrativeCosts) &&
+                Objects.equals(profit, that.profit) &&
+                Objects.equals(operatingIncome, that.operatingIncome) &&
+                Objects.equals(incomeBeforeTaxes, that.incomeBeforeTaxes) &&
+                Objects.equals(netIncome, that.netIncome);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(revenue, goodsSoldCosts, sellingCosts, administrativeCosts, profit, operatingIncome, incomeBeforeTaxes, netIncome);
+    }
 
     @Override
     public String toString() {

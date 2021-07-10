@@ -12,13 +12,10 @@ public class ActivityTag {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
+    @Column(name = "tag_name")
     private String tagName;
 
     public ActivityTag() {
-    }
-
-    public ActivityTag(String tagName) {
-        this.tagName = tagName;
     }
 
     public Long getId() {

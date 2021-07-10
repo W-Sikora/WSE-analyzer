@@ -20,6 +20,7 @@ public class Price {
     @JoinColumn(name = "company_id")
     private Company company;
 
+    @Column(name = "date_time")
     private LocalDateTime datetime;
 
     private BigDecimal last;
@@ -34,21 +35,10 @@ public class Price {
 
     private Long volume;
 
+    @Column(name = "trades_number")
     private Long tradesNumber;
 
     public Price() {
-    }
-
-    public Price(Company company, LocalDateTime datetime, BigDecimal last, BigDecimal high, BigDecimal low, BigDecimal open, BigDecimal previous, Long volume, Long tradesNumber) {
-        this.company = company;
-        this.datetime = datetime;
-        this.last = last;
-        this.high = high;
-        this.low = low;
-        this.open = open;
-        this.previous = previous;
-        this.volume = volume;
-        this.tradesNumber = tradesNumber;
     }
 
     public Long getId() {

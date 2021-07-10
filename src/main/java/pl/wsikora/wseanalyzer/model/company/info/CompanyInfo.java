@@ -20,6 +20,7 @@ public class CompanyInfo {
     @JoinColumn(name = "company_id")
     private Company company;
 
+    @Column(name = "stock_exchange")
     private StockExchange stockExchange;
 
     private Industry industry;

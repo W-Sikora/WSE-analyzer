@@ -5,6 +5,7 @@ import pl.wsikora.wseanalyzer.model.company.Company;
 import javax.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -24,9 +25,11 @@ public class Shareholding {
     @JoinColumn(name = "shareholder_id")
     private Shareholder shareholder;
 
+    @Column(name = "shares_held")
     private Long sharesHeld;
 
-    private LocalDate updateDate;
+    @Column(name = "latest_update")
+    private LocalDate latestUpdate;
 
     public Shareholding() {
     }
@@ -63,12 +66,39 @@ public class Shareholding {
         this.sharesHeld = sharesHeld;
     }
 
-    public LocalDate getUpdateDate() {
-        return updateDate;
+    public LocalDate getLatestUpdate() {
+        return latestUpdate;
     }
 
-    public void setUpdateDate(LocalDate updateDate) {
-        this.updateDate = updateDate;
+    public void setLatestUpdate(LocalDate updateDate) {
+        this.latestUpdate = updateDate;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Shareholding that = (Shareholding) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(company, that.company) &&
+                Objects.equals(shareholder, that.shareholder) &&
+                Objects.equals(sharesHeld, that.sharesHeld) &&
+                Objects.equals(latestUpdate, that.latestUpdate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, company, shareholder, sharesHeld, latestUpdate);
+    }
+
+    @Override
+    public String toString() {
+        return "Shareholding{" +
+                "id=" + id +
+                ", company=" + company +
+                ", shareholder=" + shareholder +
+                ", sharesHeld=" + sharesHeld +
+                ", latestUpdate=" + latestUpdate +
+                '}';
+    }
 }

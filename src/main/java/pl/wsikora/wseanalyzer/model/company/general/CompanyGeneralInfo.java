@@ -5,7 +5,6 @@ import pl.wsikora.wseanalyzer.model.company.Company;
 import javax.persistence.*;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -20,6 +19,7 @@ public class CompanyGeneralInfo {
     @JoinColumn(name = "company_id")
     private Company company;
 
+    @Column(name = "debut_date")
     private LocalDate debutDate;
 
     private Long sharesNumber;
