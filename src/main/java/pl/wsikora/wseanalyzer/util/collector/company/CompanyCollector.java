@@ -11,21 +11,26 @@ import pl.wsikora.wseanalyzer.model.company.info.StockExchange;
 import pl.wsikora.wseanalyzer.util.document.URLDocument;
 
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.Optional;
 
 import static pl.wsikora.wseanalyzer.util.date.DateParser.dateFormatter;
+import static pl.wsikora.wseanalyzer.util.collector.CollectorValues.COMPANY_PAGE_URL;
+import static pl.wsikora.wseanalyzer.util.collector.CollectorValues.PROFILE_SUMMARY_CSS_QUERY;
 
 public class CompanyCollector {
     private final Document document;
-    private final Elements profileSummary;
-    private final Elements profileSummary2;
+    private final Element profileSummary;
+    private final Element profileSummary2;
     private final String businessRadarAcronym;
+    private final Map<String, String> bankerAcronyms;
 
-    public CompanyCollector(String url, String businessRadarAcronym) {
-        this.document = URLDocument.get(url);
-        this.profileSummary = document.select("#left-content div[class=box-left] table[class=profileSummary]");
-        this.profileSummary2 = document.select("#left-content div[class=box-left] table[class=class=profileSummary hidden]");
+    public CompanyCollector(String businessRadarAcronym) {
+        this.document = URLDocument.get(String.format(COMPANY_PAGE_URL, businessRadarAcronym));
+        this.profileSummary = document.select(PROFILE_SUMMARY_CSS_QUERY).get(0);
+        this.profileSummary2 = document.select(PROFILE_SUMMARY_CSS_QUERY).get(1);
         this.businessRadarAcronym = businessRadarAcronym;
+        this.bankerAcronyms = BankerAcronymCollector.getTickersWithBankerAcronym();
     }
 
     public Company formCompany() {
@@ -33,8 +38,10 @@ public class CompanyCollector {
         company.setName(document.select("#fullname-container h2").text());
         company.setTicker(document.select("#profile-header h1").text()
                 .replace("Notowania ", "")
-                .replaceAll("\\(.+\\)", ""));
+                .replaceAll("\\(.+\\)", "")
+                .strip());
         company.setBusinessRadarAcronym(businessRadarAcronym);
+        company.setBankerAcronym(bankerAcronyms.get(company.getTicker()));
         extractFromProfile(profileSummary,"ISIN")
                 .ifPresent(company::setIsin);
         return company;
@@ -63,7 +70,7 @@ public class CompanyCollector {
                         companyInfo.setStockExchange(StockExchange.NEW_CONNECT);
                     }
                 });
-        extractFromProfile(profileSummary, "Branża")
+        extractFromProfile(profileSummary, "Bran?a")
                 .ifPresent(e -> {
                     for(Industry industry : Industry.values()) {
                         if (industry.getName().equals(e)) {
@@ -74,7 +81,7 @@ public class CompanyCollector {
         return companyInfo;
     }
 
-    private static Optional<String> extractFromProfile(Elements profileSummary, String key) {
+    private static Optional<String> extractFromProfile(Element profileSummary, String key) {
         for(Element element : profileSummary.select("tr")) {
             if (isKeyLike(element, key)) {
                 return Optional.of(element.select("td").text());
