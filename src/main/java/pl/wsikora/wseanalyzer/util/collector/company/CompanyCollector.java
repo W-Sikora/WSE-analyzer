@@ -2,7 +2,6 @@ package pl.wsikora.wseanalyzer.util.collector.company;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import pl.wsikora.wseanalyzer.model.company.Company;
 import pl.wsikora.wseanalyzer.model.company.general.CompanyGeneralInfo;
 import pl.wsikora.wseanalyzer.model.company.info.CompanyInfo;
@@ -23,14 +22,14 @@ public class CompanyCollector {
     private final Element profileSummary;
     private final Element profileSummary2;
     private final String businessRadarAcronym;
-    private final Map<String, String> bankerAcronyms;
+//    private final Map<String, String> bankerAcronyms;
 
     public CompanyCollector(String businessRadarAcronym) {
         this.document = URLDocument.get(String.format(COMPANY_PAGE_URL, businessRadarAcronym));
         this.profileSummary = document.select(PROFILE_SUMMARY_CSS_QUERY).get(0);
         this.profileSummary2 = document.select(PROFILE_SUMMARY_CSS_QUERY).get(1);
         this.businessRadarAcronym = businessRadarAcronym;
-        this.bankerAcronyms = BankerAcronymCollector.getTickersWithBankerAcronym();
+//        this.bankerAcronyms = BankerInfoCollector.getTickersWithBankerAcronym();
     }
 
     public Company formCompany() {
@@ -41,7 +40,7 @@ public class CompanyCollector {
                 .replaceAll("\\(.+\\)", "")
                 .strip());
         company.setBusinessRadarAcronym(businessRadarAcronym);
-        company.setBankerAcronym(bankerAcronyms.get(company.getTicker()));
+//        company.setBankerAcronym(bankerAcronyms.get(company.getTicker()));
         extractFromProfile(profileSummary,"ISIN")
                 .ifPresent(company::setIsin);
         return company;
@@ -70,7 +69,7 @@ public class CompanyCollector {
                         companyInfo.setStockExchange(StockExchange.NEW_CONNECT);
                     }
                 });
-        extractFromProfile(profileSummary, "Bran?a")
+        extractFromProfile(profileSummary, "Branża")
                 .ifPresent(e -> {
                     for(Industry industry : Industry.values()) {
                         if (industry.getName().equals(e)) {

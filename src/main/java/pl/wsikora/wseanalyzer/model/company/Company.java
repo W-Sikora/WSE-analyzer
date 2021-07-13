@@ -38,12 +38,6 @@ public class Company {
             length = 30)
     private String bankerAcronym;
 
-    @OneToOne(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private CompanyGeneralInfo companyGeneralInfo;
-
-    @OneToOne(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private CompanyInfo companyInfo;
-
     public Company() {
     }
 
@@ -95,22 +89,6 @@ public class Company {
         this.bankerAcronym = bankerAcronym;
     }
 
-    public CompanyGeneralInfo getCompanyGeneralInfo() {
-        return companyGeneralInfo;
-    }
-
-    public void setCompanyGeneralInfo(CompanyGeneralInfo companyGeneralInfo) {
-        this.companyGeneralInfo = companyGeneralInfo;
-    }
-
-    public CompanyInfo getCompanyInfo() {
-        return companyInfo;
-    }
-
-    public void setCompanyInfo(CompanyInfo companyInfo) {
-        this.companyInfo = companyInfo;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -121,14 +99,12 @@ public class Company {
                 Objects.equals(isin, company.isin) &&
                 Objects.equals(ticker, company.ticker) &&
                 Objects.equals(businessRadarAcronym, company.businessRadarAcronym) &&
-                Objects.equals(bankerAcronym, company.bankerAcronym) &&
-                Objects.equals(companyGeneralInfo, company.companyGeneralInfo) &&
-                Objects.equals(companyInfo, company.companyInfo);
+                Objects.equals(bankerAcronym, company.bankerAcronym);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, isin, ticker, businessRadarAcronym, bankerAcronym, companyGeneralInfo, companyInfo);
+        return Objects.hash(id, name, isin, ticker, businessRadarAcronym, bankerAcronym);
     }
 
     @Override
@@ -140,8 +116,6 @@ public class Company {
                 ", ticker='" + ticker + '\'' +
                 ", businessRadarAcronym='" + businessRadarAcronym + '\'' +
                 ", bankerAcronym='" + bankerAcronym + '\'' +
-                ", companyGeneralInfo=" + companyGeneralInfo +
-                ", companyInfo=" + companyInfo +
                 '}';
     }
 

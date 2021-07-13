@@ -2,7 +2,7 @@ package pl.wsikora.wseanalyzer.services.company;
 
 import pl.wsikora.wseanalyzer.model.company.Company;
 
-import java.awt.print.Pageable;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,9 +12,9 @@ public interface CompanyService {
 
     Optional<Company> getOne(long id);
 
-    void create(Company company);
+    Company create(Company company);
 
-    void update(long id, Company newCompany);
+    Company update(long id, Company company);
 
     void delete(long id);
 
