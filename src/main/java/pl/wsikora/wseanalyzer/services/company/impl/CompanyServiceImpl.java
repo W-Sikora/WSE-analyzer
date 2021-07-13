@@ -22,13 +22,13 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public List<Company> getAll(Pageable pageable) {
+    public List<Company> getPart(Pageable pageable) {
         return repository.findAll(pageable)
                 .toList();
     }
 
     @Override
-    public Optional<Company> getOne(long id) {
+    public Optional<Company> getSingle(long id) {
         return repository.findById(id);
     }
 
@@ -40,7 +40,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     @Transactional
     public Company update(long id, Company company) {
-        Company updatedCompany = repository.findById(id).orElseThrow();
+        Company updatedCompany = repository.findById(id).get();
         updatedCompany.setBankerAcronym(company.getBankerAcronym());
         updatedCompany.setBusinessRadarAcronym(company.getBusinessRadarAcronym());
         updatedCompany.setTicker(company.getTicker());
@@ -52,6 +52,11 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void delete(long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public boolean exist(long id) {
+        return repository.existsById(id);
     }
 
 }

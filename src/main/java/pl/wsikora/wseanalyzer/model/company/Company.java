@@ -1,7 +1,6 @@
 package pl.wsikora.wseanalyzer.model.company;
 
-import pl.wsikora.wseanalyzer.model.company.general.CompanyGeneralInfo;
-import pl.wsikora.wseanalyzer.model.company.info.CompanyInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -28,11 +27,13 @@ public class Company {
             length = 5)
     private String ticker;
 
+    @JsonIgnore
     @Column(name = "business_radar_acronym",
             unique = true,
             length = 30)
     private String businessRadarAcronym;
 
+    @JsonIgnore
     @Column(name = "banker_acronym",
             unique = true,
             length = 30)

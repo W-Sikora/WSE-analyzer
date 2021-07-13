@@ -10,6 +10,8 @@ import java.util.Optional;
 @Repository
 public interface CompanyRepository extends JpaRepository<Company, Long> {
 
+
+
     Optional<Company> getCompanyByTicker(String ticker);
 
     Optional<Company> getCompanyByIsin(String isin);
