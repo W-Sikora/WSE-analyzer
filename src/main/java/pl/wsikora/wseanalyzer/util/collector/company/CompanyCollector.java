@@ -2,11 +2,7 @@ package pl.wsikora.wseanalyzer.util.collector.company;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import pl.wsikora.wseanalyzer.model.company.Company;
-import pl.wsikora.wseanalyzer.model.company.CompanyGeneralInfo;
-import pl.wsikora.wseanalyzer.model.company.CompanyInfo;
-import pl.wsikora.wseanalyzer.model.company.Industry;
-import pl.wsikora.wseanalyzer.model.company.StockExchange;
+import pl.wsikora.wseanalyzer.model.company.*;
 import pl.wsikora.wseanalyzer.util.document.URLDocument;
 
 import java.time.LocalDate;

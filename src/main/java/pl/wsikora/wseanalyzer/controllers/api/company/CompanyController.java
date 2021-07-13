@@ -2,15 +2,13 @@ package pl.wsikora.wseanalyzer.controllers.api.company;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import pl.wsikora.wseanalyzer.controllers.api.ResourceNotFoundException;
+import org.springframework.data.domain.Pageable;
 import pl.wsikora.wseanalyzer.model.company.Company;
 import pl.wsikora.wseanalyzer.services.company.CompanyService;
 
-import org.springframework.data.domain.Pageable;
-
-import java.net.URI;
 import java.util.List;
+
+import static pl.wsikora.wseanalyzer.util.Utils.makeNewUri;
 
 
 @RestController
@@ -36,36 +34,20 @@ public class CompanyController {
     @PostMapping
     public ResponseEntity<Company> create(@RequestBody Company company) {
         Company createdCompany = service.create(company);
-        return ResponseEntity.created(makeNewUri(createdCompany))
+        return ResponseEntity.created(makeNewUri(createdCompany.getId()))
                 .body(createdCompany);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Company> update(@PathVariable long id, @RequestBody Company company) {
-        verify(id);
         return ResponseEntity.ok(service.update(id, company));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Company> delete(@PathVariable long id) {
-        verify(id);
         service.delete(id);
         return ResponseEntity.noContent()
                 .build();
-    }
-
-    private void verify(long id) throws ResourceNotFoundException {
-        if (!service.exist(id)) {
-            throw new ResourceNotFoundException("Company with id " + id + " not found");
-        }
-    }
-
-    private URI makeNewUri(Company company) {
-        return ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(company.getId())
-                .toUri();
     }
 
 }

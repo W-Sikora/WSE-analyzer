@@ -18,6 +18,4 @@ public interface CompanyService {
 
     void delete(long id);
 
-    boolean exist(long id);
-
 }

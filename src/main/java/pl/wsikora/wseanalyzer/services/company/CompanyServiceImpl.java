@@ -1,11 +1,10 @@
-package pl.wsikora.wseanalyzer.services.company.impl;
+package pl.wsikora.wseanalyzer.services.company;
 
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import pl.wsikora.wseanalyzer.controllers.api.exception.ResourceNotFoundException;
 import pl.wsikora.wseanalyzer.model.company.Company;
 import pl.wsikora.wseanalyzer.repositories.company.CompanyRepository;
-import pl.wsikora.wseanalyzer.services.company.CompanyService;
 
 import javax.transaction.Transactional;
 
@@ -40,23 +39,25 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     @Transactional
     public Company update(long id, Company company) {
-        Company updatedCompany = repository.findById(id).get();
-        updatedCompany.setBankerAcronym(company.getBankerAcronym());
-        updatedCompany.setBusinessRadarAcronym(company.getBusinessRadarAcronym());
-        updatedCompany.setTicker(company.getTicker());
-        updatedCompany.setName(company.getName());
-        updatedCompany.setIsin(company.getIsin());
-        return updatedCompany;
+        return repository.findById(id)
+                .map(updatedCompany -> {
+                    updatedCompany.setBankerAcronym(company.getBankerAcronym());
+                    updatedCompany.setBusinessRadarAcronym(company.getBusinessRadarAcronym());
+                    updatedCompany.setTicker(company.getTicker());
+                    updatedCompany.setName(company.getName());
+                    updatedCompany.setIsin(company.getIsin());
+                    return updatedCompany;
+                })
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Company with id %d not found", id)));
     }
 
     @Override
     public void delete(long id) {
-        repository.deleteById(id);
-    }
-
-    @Override
-    public boolean exist(long id) {
-        return repository.existsById(id);
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+        } else {
+            throw new ResourceNotFoundException(String.format("Company with id %d not found", id));
+        }
     }
 
 }
