@@ -1,4 +1,4 @@
-package pl.wsikora.wseanalyzer.model.company.info;
+package pl.wsikora.wseanalyzer.model.company;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -12,7 +12,8 @@ public class ActivityTag {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @Column(name = "tag_name")
+    @Column(name = "tag_name",
+            unique = true)
     private String tagName;
 
     public ActivityTag() {

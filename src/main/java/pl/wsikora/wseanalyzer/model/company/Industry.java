@@ -1,4 +1,4 @@
-package pl.wsikora.wseanalyzer.model.company.info;
+package pl.wsikora.wseanalyzer.model.company;
 
 public enum  Industry {
     GROCERIES("Artykuły spożywcze"),
@@ -49,7 +49,5 @@ public enum  Industry {
     public String getName() {
        return this.name();
     }
-
-
 
 }

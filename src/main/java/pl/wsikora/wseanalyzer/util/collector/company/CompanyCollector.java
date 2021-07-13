@@ -3,14 +3,13 @@ package pl.wsikora.wseanalyzer.util.collector.company;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import pl.wsikora.wseanalyzer.model.company.Company;
-import pl.wsikora.wseanalyzer.model.company.general.CompanyGeneralInfo;
-import pl.wsikora.wseanalyzer.model.company.info.CompanyInfo;
-import pl.wsikora.wseanalyzer.model.company.info.Industry;
-import pl.wsikora.wseanalyzer.model.company.info.StockExchange;
+import pl.wsikora.wseanalyzer.model.company.CompanyGeneralInfo;
+import pl.wsikora.wseanalyzer.model.company.CompanyInfo;
+import pl.wsikora.wseanalyzer.model.company.Industry;
+import pl.wsikora.wseanalyzer.model.company.StockExchange;
 import pl.wsikora.wseanalyzer.util.document.URLDocument;
 
 import java.time.LocalDate;
-import java.util.Map;
 import java.util.Optional;
 
 import static pl.wsikora.wseanalyzer.util.date.DateParser.dateFormatter;

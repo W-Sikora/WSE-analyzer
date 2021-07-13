@@ -1,6 +1,4 @@
-package pl.wsikora.wseanalyzer.model.company.info;
-
-import pl.wsikora.wseanalyzer.model.company.Company;
+package pl.wsikora.wseanalyzer.model.company;
 
 import javax.persistence.*;
 

@@ -1,6 +1,6 @@
 package pl.wsikora.wseanalyzer.services.company;
 
-import pl.wsikora.wseanalyzer.model.company.info.CompanyInfo;
+import pl.wsikora.wseanalyzer.model.company.CompanyInfo;
 
 import java.awt.print.Pageable;
 import java.util.List;
