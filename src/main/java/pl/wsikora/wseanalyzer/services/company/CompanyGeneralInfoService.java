@@ -1,20 +1,21 @@
 package pl.wsikora.wseanalyzer.services.company;
 
-import pl.wsikora.wseanalyzer.model.company.general.CompanyGeneralInfo;
+import pl.wsikora.wseanalyzer.model.company.CompanyGeneralInfo;
 
-import java.awt.print.Pageable;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
-public interface CompanyGeneralInfoService {
+public interface CompanyGeneralInfoService  {
 
-    List<CompanyGeneralInfo> getAll(Pageable pageable);
+    List<CompanyGeneralInfo> getPart(Pageable pageable);
 
-    Optional< CompanyGeneralInfo> getOne(long id);
+    Optional<CompanyGeneralInfo> getSingle(long id);
 
-    void create(CompanyGeneralInfo companyGeneralInfo);
+    CompanyGeneralInfo create(CompanyGeneralInfo companyGeneralInfo);
 
-    void update(long id, CompanyGeneralInfo updatedCompanyGeneralInfo);
+    CompanyGeneralInfo update(long id, CompanyGeneralInfo updatedCompanyGeneralInfo);
 
     void delete(long id);
+
 }
