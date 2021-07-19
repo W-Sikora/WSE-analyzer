@@ -1,36 +1,53 @@
 package pl.wsikora.wseanalyzer.controllers.api.dividend;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.wsikora.wseanalyzer.controllers.api.REST;
 import pl.wsikora.wseanalyzer.model.dividend.Dividend;
+import pl.wsikora.wseanalyzer.services.dividend.DividendService;
+
+import java.util.List;
+
+import static pl.wsikora.wseanalyzer.util.Utils.makeNewUri;
 
 @RestController
 @RequestMapping(value = "/api/v1/dividends")
-public class DividendController {
+public class DividendController implements REST<Dividend> {
 
-    @GetMapping(produces = "application/json")
-    public ResponseEntity<?> getAll() {
-        throw new IllegalArgumentException("not implemented yet");
+    private final DividendService service;
+
+    public DividendController(DividendService service) {
+        this.service = service;
     }
 
-    @GetMapping(path = "/{id}", produces = "application/json")
-    public ResponseEntity<?> getOne(@PathVariable long id) {
-        throw new IllegalArgumentException("not implemented yet");
+    @Override
+    public ResponseEntity<List<Dividend>> getPart(Pageable pageable) {
+        return ResponseEntity.ok(service.getPart(pageable));
     }
 
-    @PostMapping
-    public ResponseEntity<?> create(@RequestBody Dividend dividend) {
-        throw new IllegalArgumentException("not implemented yet");
+    @Override
+    public ResponseEntity<Dividend> getSingle(long id) {
+        return ResponseEntity.of(service.getSingle(id));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable long id, @RequestBody Dividend dividend) {
-        throw new IllegalArgumentException("not implemented yet");
+    @Override
+    public ResponseEntity<Dividend> create(Dividend dividend) {
+        Dividend createdDividend = service.create(dividend);
+        return ResponseEntity.created(makeNewUri(createdDividend.getId()))
+                .body(createdDividend);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable long id) {
-        throw new IllegalArgumentException("not implemented yet");
+    @Override
+    public ResponseEntity<Dividend> update(long id, Dividend dividend) {
+        return ResponseEntity.ok(service.update(id, dividend));
+    }
+
+    @Override
+    public ResponseEntity<Void> delete(long id) {
+        service.delete(id);
+        return ResponseEntity.noContent()
+                .build();
     }
 
 }
