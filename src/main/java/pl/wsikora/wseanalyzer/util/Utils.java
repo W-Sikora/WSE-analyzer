@@ -1,15 +1,12 @@
 package pl.wsikora.wseanalyzer.util;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import pl.wsikora.wseanalyzer.model.company.Company;
 
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import static pl.wsikora.wseanalyzer.util.collector.CollectorValues.BANKER_ACRONYMS_URL;
 
 public class Utils {
 

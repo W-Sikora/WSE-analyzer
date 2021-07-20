@@ -1,7 +1,7 @@
 package pl.wsikora.wseanalyzer.util.collector.statement;
 
-import pl.wsikora.wseanalyzer.model.company.Company;
-import pl.wsikora.wseanalyzer.model.statement.IncomeStatement;
+import pl.wsikora.wseanalyzer.model.Company;
+import pl.wsikora.wseanalyzer.model.IncomeStatement;
 
 import static pl.wsikora.wseanalyzer.util.collector.CollectorValues.URL_PATTERN;
 import static pl.wsikora.wseanalyzer.util.collector.CollectorValues.INCOME_STATEMENT_URL;

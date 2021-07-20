@@ -1,7 +1,7 @@
 package pl.wsikora.wseanalyzer.util.collector.statement;
 
-import pl.wsikora.wseanalyzer.model.company.Company;
-import pl.wsikora.wseanalyzer.model.statement.BalanceSheet;
+import pl.wsikora.wseanalyzer.model.Company;
+import pl.wsikora.wseanalyzer.model.BalanceSheet;
 
 import static pl.wsikora.wseanalyzer.util.collector.CollectorValues.*;
 
