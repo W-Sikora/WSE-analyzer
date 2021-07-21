@@ -1,15 +1,22 @@
 package pl.wsikora.wseanalyzer.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "companies_info")
-public class CompanyInfo {
+@JsonDeserialize(builder = CompanyInfo.Builder.class)
+public final class CompanyInfo {
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -30,51 +37,69 @@ public class CompanyInfo {
     public CompanyInfo() {
     }
 
-    public CompanyInfo(Company company, StockExchange stockExchange, Industry industry, List<ActivityTag> activityTags) {
-        this.company = company;
-        this.stockExchange = stockExchange;
-        this.industry = industry;
-        this.activityTags = activityTags;
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    @JsonPOJOBuilder
+    public static final class Builder {
+        private final List<Consumer<CompanyInfo>> operations;
+
+        private Builder() {
+            operations = new ArrayList<>();
+        }
+
+        public Builder withId(long id) {
+            operations.add(e -> e.id = id);
+            return this;
+        }
+
+        public Builder withCompany(Company company) {
+            operations.add(e -> e.company = company);
+            return this;
+        }
+
+        public Builder withStockExchange(StockExchange stockExchange) {
+            operations.add(e -> e.stockExchange = stockExchange);
+            return this;
+        }
+
+        public Builder withIndustry(Industry industry) {
+            operations.add(e -> e.industry = industry);
+            return this;
+        }
+
+        public Builder withActivityTags(List<ActivityTag> activityTags) {
+            operations.add(e -> e.activityTags = activityTags);
+            return this;
+        }
+
+        public CompanyInfo build() {
+            CompanyInfo companyInfo = new CompanyInfo();
+            operations.forEach(operation -> operation.accept(companyInfo));
+            return companyInfo;
+        }
+
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Company getCompany() {
         return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
     }
 
     public StockExchange getStockExchange() {
         return stockExchange;
     }
 
-    public void setStockExchange(StockExchange stockExchange) {
-        this.stockExchange = stockExchange;
-    }
-
     public Industry getIndustry() {
         return industry;
     }
 
-    public void setIndustry(Industry industry) {
-        this.industry = industry;
-    }
-
     public List<ActivityTag> getActivityTags() {
         return activityTags;
-    }
-
-    public void setActivityTags(List<ActivityTag> activityTags) {
-        this.activityTags = activityTags;
     }
 
     @Override

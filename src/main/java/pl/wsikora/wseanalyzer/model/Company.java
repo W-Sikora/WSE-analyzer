@@ -1,93 +1,119 @@
 package pl.wsikora.wseanalyzer.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "companies")
-public class Company {
+@JsonDeserialize(builder = Company.Builder.class)
+public final class Company {
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @Column(unique = true,
-            length = 180)
+    @Column(unique = true, length = 180)
     private String name;
 
-    @Column(unique = true,
-            length = 30)
+    @Column(unique = true, length = 30)
     private String isin;
 
-    @Column(unique = true,
-            length = 5)
+    @Column(unique = true, length = 5)
     private String ticker;
 
     @JsonIgnore
-    @Column(name = "business_radar_acronym",
-            unique = true,
-            length = 30)
+    @Column(name = "business_radar_acronym", unique = true, length = 30)
     private String businessRadarAcronym;
 
     @JsonIgnore
-    @Column(name = "banker_acronym",
-            unique = true,
-            length = 30)
+    @Column(name = "banker_acronym", unique = true, length = 30)
     private String bankerAcronym;
 
     public Company() {
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    @JsonPOJOBuilder
+    public static final class Builder {
+        private final List<Consumer<Company>> operations;
+
+        private Builder() {
+            this.operations = new ArrayList<>();
+        }
+
+        public Builder withId(Long id) {
+            this.operations.add(c -> c.id = id);
+            return this;
+        }
+
+        public Builder withName(String name) {
+            this.operations.add(c -> c.name = name);
+            return this;
+        }
+
+        public Builder withIsin(String isin) {
+            this.operations.add(c -> c.isin = isin);
+            return this;
+        }
+
+        public Builder withTicker(String ticker) {
+            this.operations.add(c -> c.ticker = ticker);
+            return this;
+        }
+
+        public Builder withBusinessRadarAcronym(String businessRadarAcronym) {
+            this.operations.add(c -> c.businessRadarAcronym = businessRadarAcronym);
+            return this;
+        }
+
+        public Builder withBankerAcronym(String bankerAcronym) {
+            this.operations.add(c -> c.bankerAcronym = bankerAcronym);
+            return this;
+        }
+
+        public Company build() {
+            Company company = new Company();
+            operations.forEach(operation -> operation.accept(company));
+            return company;
+        }
+
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getIsin() {
         return isin;
     }
 
-    public void setIsin(String isin) {
-        this.isin = isin;
-    }
-
     public String getTicker() {
         return ticker;
-    }
-
-    public void setTicker(String ticker) {
-        this.ticker = ticker;
     }
 
     public String getBusinessRadarAcronym() {
         return businessRadarAcronym;
     }
 
-    public void setBusinessRadarAcronym(String businessRadarAcronym) {
-        this.businessRadarAcronym = businessRadarAcronym;
-    }
-
     public String getBankerAcronym() {
         return bankerAcronym;
-    }
-
-    public void setBankerAcronym(String bankerAcronym) {
-        this.bankerAcronym = bankerAcronym;
     }
 
     @Override
