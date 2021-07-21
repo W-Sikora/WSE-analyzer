@@ -46,7 +46,7 @@ public class DividendServiceImpl implements DividendService {
                     updatedDividend.setSupplementaryCapitalContribution(dividend.getSupplementaryCapitalContribution());
                     return updatedDividend;
                 })
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Dividend with id %d not found", id)));
+                .orElseThrow(() -> new ResourceNotFoundException(Dividend.class, id));
     }
 
     @Override
@@ -54,7 +54,7 @@ public class DividendServiceImpl implements DividendService {
         if (repository.existsById(id)) {
             repository.deleteById(id);
         } else {
-            throw new ResourceNotFoundException(String.format("Dividend with id %d not found", id));
+            throw new ResourceNotFoundException(Dividend.class, id);
         }
     }
 }

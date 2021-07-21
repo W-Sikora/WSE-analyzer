@@ -48,7 +48,7 @@ public class CompanyServiceImpl implements CompanyService {
                     updatedCompany.setIsin(company.getIsin());
                     return updatedCompany;
                 })
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Company with id %d not found", id)));
+                .orElseThrow(() -> new ResourceNotFoundException(Company.class, id));
     }
 
     @Override
@@ -56,7 +56,7 @@ public class CompanyServiceImpl implements CompanyService {
         if (repository.existsById(id)) {
             repository.deleteById(id);
         } else {
-            throw new ResourceNotFoundException(String.format("Company with id %d not found", id));
+            throw new ResourceNotFoundException(Company.class, id);
         }
     }
 

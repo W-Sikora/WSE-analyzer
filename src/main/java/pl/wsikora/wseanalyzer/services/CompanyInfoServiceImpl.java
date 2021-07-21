@@ -46,7 +46,7 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
                     updateCompanyInfo.setStockExchange(companyInfo.getStockExchange());
                     return updateCompanyInfo;
                 })
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("CompanyInfo with id %d not found", id)));
+                .orElseThrow(() -> new ResourceNotFoundException(CompanyInfo.class, id));
     }
 
     @Override
@@ -54,7 +54,7 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
         if (repository.existsById(id)) {
             repository.deleteById(id);
         } else {
-            throw new ResourceNotFoundException(String.format("CompanyInfo with id %d not found", id));
+            throw new ResourceNotFoundException(CompanyInfo.class, id);
         }
     }
 

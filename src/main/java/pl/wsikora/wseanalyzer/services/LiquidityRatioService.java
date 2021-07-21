@@ -13,9 +13,9 @@ public interface LiquidityRatioService {
 
     Optional<LiquidityRatio> getSingle(long id);
 
-    LiquidityRatio create(LiquidityRatio incomeStatement);
+    LiquidityRatio create(LiquidityRatio liquidityRatio);
 
-    LiquidityRatio update(long id, LiquidityRatio incomeStatement);
+    LiquidityRatio update(long id, LiquidityRatio liquidityRatio);
 
     void delete(long id);
 

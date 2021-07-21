@@ -47,7 +47,7 @@ public class CompanyGeneralInfoServiceImpl implements CompanyGeneralInfoService 
                     updatedCompanyGeneralInfo.setSharesNumber(companyGeneralInfo.getSharesNumber());
                     return updatedCompanyGeneralInfo;
                 })
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("CompanyInfo with id %d not found", id)));
+                .orElseThrow(() -> new ResourceNotFoundException(CompanyGeneralInfo.class, id));
     }
 
     @Override
@@ -55,7 +55,7 @@ public class CompanyGeneralInfoServiceImpl implements CompanyGeneralInfoService 
         if (repository.existsById(id)) {
             repository.deleteById(id);
         } else {
-            throw new ResourceNotFoundException(String.format("CompanyInfo with id %d not found", id));
+            throw new ResourceNotFoundException(CompanyGeneralInfo.class, id);
         }
     }
 
