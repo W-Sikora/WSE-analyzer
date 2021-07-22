@@ -47,40 +47,40 @@ public final class Company {
     }
 
     @JsonPOJOBuilder
-    public static final class Builder {
+    static final class Builder {
         private final List<Consumer<Company>> operations;
 
         private Builder() {
-            this.operations = new ArrayList<>();
+            operations = new ArrayList<>();
         }
 
         public Builder withId(Long id) {
-            this.operations.add(c -> c.id = id);
+            operations.add(e -> e.id = id);
             return this;
         }
 
         public Builder withName(String name) {
-            this.operations.add(c -> c.name = name);
+            operations.add(e -> e.name = name);
             return this;
         }
 
         public Builder withIsin(String isin) {
-            this.operations.add(c -> c.isin = isin);
+            operations.add(e -> e.isin = isin);
             return this;
         }
 
         public Builder withTicker(String ticker) {
-            this.operations.add(c -> c.ticker = ticker);
+            operations.add(e -> e.ticker = ticker);
             return this;
         }
 
         public Builder withBusinessRadarAcronym(String businessRadarAcronym) {
-            this.operations.add(c -> c.businessRadarAcronym = businessRadarAcronym);
+            operations.add(e -> e.businessRadarAcronym = businessRadarAcronym);
             return this;
         }
 
         public Builder withBankerAcronym(String bankerAcronym) {
-            this.operations.add(c -> c.bankerAcronym = bankerAcronym);
+            operations.add(e -> e.bankerAcronym = bankerAcronym);
             return this;
         }
 

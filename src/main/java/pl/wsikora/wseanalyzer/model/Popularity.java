@@ -1,14 +1,22 @@
 package pl.wsikora.wseanalyzer.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "popularities")
-public class Popularity {
+@JsonDeserialize(builder = Popularity.Builder.class)
+public final class Popularity {
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -28,44 +36,69 @@ public class Popularity {
     public Popularity() {
     }
 
-    public Long getId() {
-        return id;
+    public static Builder builder() {
+        return new Builder();
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    @JsonPOJOBuilder
+    static final class Builder {
+        private final List<Consumer<Popularity>> operations;
+
+        private Builder() {
+            operations = new ArrayList<>();
+        }
+
+        public Builder withId(Long id) {
+            operations.add(e -> e.id = id);
+            return this;
+        }
+
+        public Builder withCompany(Company company) {
+            operations.add(e -> e.company = company);
+            return this;
+        }
+
+        public Builder withDate(LocalDate date) {
+            operations.add(e -> e.date = date);
+            return this;
+        }
+
+        public Builder withBankerRankingPosition(Short bankerRankingPosition) {
+            operations.add(e -> e.bankerRankingPosition = bankerRankingPosition);
+            return this;
+        }
+
+        public Builder withBusinessRadarRankingPosition(Short businessRadarRankingPosition) {
+            operations.add(e -> e.businessRadarRankingPosition = businessRadarRankingPosition);
+            return this;
+        }
+
+        public Popularity build() {
+            Popularity popularity = new Popularity();
+            operations.forEach(operation -> operation.accept(popularity));
+            return popularity;
+        }
+
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Company getCompany() {
         return company;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
     public LocalDate getDate() {
         return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 
     public Short getBankerRankingPosition() {
         return bankerRankingPosition;
     }
 
-    public void setBankerRankingPosition(Short bankerRankingPosition) {
-        this.bankerRankingPosition = bankerRankingPosition;
-    }
-
     public Short getBusinessRadarRankingPosition() {
         return businessRadarRankingPosition;
-    }
-
-    public void setBusinessRadarRankingPosition(Short businessRadarRankingPosition) {
-        this.businessRadarRankingPosition = businessRadarRankingPosition;
     }
 
     @Override
@@ -95,4 +128,5 @@ public class Popularity {
                 ", businessRadarRankingPosition=" + businessRadarRankingPosition +
                 '}';
     }
+
 }

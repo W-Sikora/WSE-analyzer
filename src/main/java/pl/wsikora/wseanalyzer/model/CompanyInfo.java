@@ -42,7 +42,7 @@ public final class CompanyInfo {
     }
 
     @JsonPOJOBuilder
-    public static final class Builder {
+    protected static final class Builder {
         private final List<Consumer<CompanyInfo>> operations;
 
         private Builder() {

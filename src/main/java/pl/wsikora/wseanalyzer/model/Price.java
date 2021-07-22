@@ -1,15 +1,23 @@
 package pl.wsikora.wseanalyzer.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.persistence.*;
+import java.io.BufferedInputStream;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "prices")
-public class Price {
+@JsonDeserialize(builder = Price.Builder.class)
+public final class Price {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -39,84 +47,114 @@ public class Price {
     public Price() {
     }
 
-    public Long getId() {
-        return id;
+    public static Builder builder() {
+        return new Builder();
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    @JsonPOJOBuilder
+    static final class Builder {
+        private final List<Consumer<Price>> operations;
+
+        private Builder() {
+            operations = new ArrayList<>();
+        }
+
+        public Builder withId(Long id) {
+            operations.add(e -> e.id = id);
+            return this;
+        }
+
+        public Builder withCompany(Company company) {
+            operations.add(e -> e.company = company);
+            return this;
+        }
+
+        public Builder withDatetime(LocalDateTime datetime) {
+            operations.add(e -> e.datetime = datetime);
+            return this;
+        }
+
+        public Builder withLast(BigDecimal last) {
+            operations.add(e -> e.last = last);
+            return this;
+        }
+
+        public Builder withHigh(BigDecimal high) {
+            operations.add(e -> e.high = high);
+            return this;
+        }
+
+        public Builder withLow(BigDecimal low) {
+            operations.add(e -> e.low = low);
+            return this;
+        }
+
+        public Builder withOpen(BigDecimal open) {
+            operations.add(e -> e.open = open);
+            return this;
+        }
+
+        public Builder withPrevious(BigDecimal previous) {
+            operations.add(e -> e.previous = previous);
+            return this;
+        }
+
+        public Builder withVolume(Long volume) {
+            operations.add(e -> e.volume = volume);
+            return this;
+        }
+
+        public Builder withTradesNumber(Long tradesNumber) {
+            operations.add(e -> e.tradesNumber = tradesNumber);
+            return this;
+        }
+
+        public Price build() {
+            Price price = new Price();
+            operations.forEach(operation -> operation.accept(price));
+            return price;
+        }
+
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Company getCompany() {
         return company;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
     public LocalDateTime getDatetime() {
         return datetime;
-    }
-
-    public void setDatetime(LocalDateTime datetime) {
-        this.datetime = datetime;
     }
 
     public BigDecimal getLast() {
         return last;
     }
 
-    public void setLast(BigDecimal last) {
-        this.last = last;
-    }
-
     public BigDecimal getHigh() {
         return high;
-    }
-
-    public void setHigh(BigDecimal high) {
-        this.high = high;
     }
 
     public BigDecimal getLow() {
         return low;
     }
 
-    public void setLow(BigDecimal low) {
-        this.low = low;
-    }
-
     public BigDecimal getOpen() {
         return open;
-    }
-
-    public void setOpen(BigDecimal open) {
-        this.open = open;
     }
 
     public BigDecimal getPrevious() {
         return previous;
     }
 
-    public void setPrevious(BigDecimal previous) {
-        this.previous = previous;
-    }
-
     public Long getVolume() {
         return volume;
     }
 
-    public void setVolume(Long volume) {
-        this.volume = volume;
-    }
-
     public Long getTradesNumber() {
         return tradesNumber;
-    }
-
-    public void setTradesNumber(Long tradesNumber) {
-        this.tradesNumber = tradesNumber;
     }
 
     @Override

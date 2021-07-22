@@ -1,16 +1,23 @@
 package pl.wsikora.wseanalyzer.model;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "dividends")
-public class Dividend {
+@JsonDeserialize(builder = Dividend.Builder.class)
+public final class Dividend {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -37,61 +44,88 @@ public class Dividend {
 
     public Dividend() {
     }
-
-    public Long getId() {
-        return id;
+    
+    public static Builder builder() {
+        return new Builder();
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    @JsonPOJOBuilder
+    protected static final class Builder {
+        private final List<Consumer<Dividend>> operations;
+
+        private Builder() {
+            operations = new ArrayList<>();
+        }
+
+        public Builder withId(Long id) {
+            operations.add(e -> e.id = id);
+            return this;
+        }
+
+        public Builder withCompany(Company company) {
+            operations.add(e -> e.company = company);
+            return this;
+        }
+
+        public Builder withDividendPerShare(BigDecimal dividendPerShare) {
+            operations.add(e -> e.dividendPerShare = dividendPerShare);
+            return this;
+        }
+
+        public Builder withDividendValue(Long dividendValue) {
+            operations.add(e -> e.dividendValue = dividendValue);
+            return this;
+        }
+
+        public Builder withSupplementaryCapitalContribution(Long supplementaryCapitalContribution) {
+            operations.add(e -> e.supplementaryCapitalContribution = supplementaryCapitalContribution);
+            return this;
+        }
+
+        public Builder withExDate(LocalDate exDate) {
+            operations.add(e -> e.exDate = exDate);
+            return this;
+        }
+
+        public Builder withPaymentDate(LocalDate paymentDate) {
+            operations.add(e -> e.paymentDate = paymentDate);
+            return this;
+        }
+
+        public Dividend build() {
+            Dividend dividend = new Dividend();
+            operations.forEach(operation -> operation.accept(dividend));
+            return dividend;
+        }
+
+    }
+    
+    public Long getId() {
+        return id;
     }
 
     public Company getCompany() {
         return company;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
     public BigDecimal getDividendPerShare() {
         return dividendPerShare;
-    }
-
-    public void setDividendPerShare(BigDecimal dividendPerShare) {
-        this.dividendPerShare = dividendPerShare;
     }
 
     public Long getDividendValue() {
         return dividendValue;
     }
 
-    public void setDividendValue(Long dividendValue) {
-        this.dividendValue = dividendValue;
-    }
-
     public Long getSupplementaryCapitalContribution() {
         return supplementaryCapitalContribution;
-    }
-
-    public void setSupplementaryCapitalContribution(Long supplementaryCapitalContribution) {
-        this.supplementaryCapitalContribution = supplementaryCapitalContribution;
     }
 
     public LocalDate getExDate() {
         return exDate;
     }
 
-    public void setExDate(LocalDate exDate) {
-        this.exDate = exDate;
-    }
-
     public LocalDate getPaymentDate() {
         return paymentDate;
-    }
-
-    public void setPaymentDate(LocalDate paymentDate) {
-        this.paymentDate = paymentDate;
     }
 
     @Override
@@ -125,4 +159,5 @@ public class Dividend {
                 ", paymentDate=" + paymentDate +
                 '}';
     }
+
 }

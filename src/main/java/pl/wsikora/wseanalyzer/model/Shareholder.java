@@ -1,14 +1,21 @@
 package pl.wsikora.wseanalyzer.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "shareholders")
-public class Shareholder {
+@JsonDeserialize(builder = Shareholder.Builder.class)
+public final class Shareholder {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -19,20 +26,38 @@ public class Shareholder {
     public Shareholder() {
     }
 
+    @JsonPOJOBuilder
+    static final class Builder {
+        private final List<Consumer<Shareholder>> operations;
+
+        private Builder() {
+            operations = new ArrayList<>();
+        }
+
+        public Builder withId(Long id) {
+            operations.add(e -> e.id = id);
+            return this;
+        }
+
+        public Builder withName(String name) {
+            operations.add(e -> e.name = name);
+            return this;
+        }
+
+        public Shareholder build() {
+            Shareholder shareholder = new Shareholder();
+            operations.forEach(operation -> operation.accept(shareholder));
+            return shareholder;
+        }
+
+    }
+
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override

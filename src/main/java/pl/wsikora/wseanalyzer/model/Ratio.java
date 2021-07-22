@@ -1,30 +1,72 @@
 package pl.wsikora.wseanalyzer.model;
 
-import pl.wsikora.wseanalyzer.model.Company;
-
 import javax.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
 @MappedSuperclass
 public abstract class Ratio {
+    
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private Long id;
+    protected Long id;
 
     @ManyToOne
     @JoinColumn(name = "company_id")
-    private Company company;
+    protected Company company;
 
-    private LocalDate date;
+    protected LocalDate date;
 
-    private String name;
+    protected String name;
 
-    private String shortcut;
+    protected String shortcut;
 
-    private BigDecimal value;
+    protected BigDecimal value;
+
+    public Long getId() {
+        return id;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getShortcut() {
+        return shortcut;
+    }
+
+    public BigDecimal getValue() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ratio ratio = (Ratio) o;
+        return Objects.equals(id, ratio.id) &&
+                Objects.equals(company, ratio.company) &&
+                Objects.equals(date, ratio.date) &&
+                Objects.equals(name, ratio.name) &&
+                Objects.equals(shortcut, ratio.shortcut) &&
+                Objects.equals(value, ratio.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, company, date, name, shortcut, value);
+    }
 
 }

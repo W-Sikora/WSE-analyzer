@@ -1,13 +1,19 @@
 package pl.wsikora.wseanalyzer.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Objects;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
 @Entity
 @Table(name = "income_statements")
-public class IncomeStatement extends Statement {
+@JsonDeserialize(builder = IncomeStatement.Builder.class)
+public final class IncomeStatement extends Statement {
 
     private Long revenue;
 
@@ -32,99 +38,120 @@ public class IncomeStatement extends Statement {
     private Long netIncome;
 
     public IncomeStatement() {
-        super();
+    }
+
+    public Builder builder() {
+        return new Builder();
+    }
+
+    static final class Builder {
+        private final List<Consumer<IncomeStatement>> operations;
+
+        private Builder() {
+            this.operations = new ArrayList<>();
+        }
+
+        public Builder withId(Long id) {
+            operations.add(e -> e.id = id);
+            return this;
+        }
+
+        public Builder withCompany(Company company) {
+            operations.add(e -> e.company = company);
+            return this;
+        }
+
+        public Builder withDate(LocalDate date) {
+            operations.add(e -> e.date = date);
+            return this;
+        }
+
+        public Builder withRevenue(Long revenue) {
+            operations.add(e -> e.revenue = revenue);
+            return this;
+        }
+
+        public Builder withGoodsSoldCosts(Long goodsSoldCosts) {
+            operations.add(e -> e.goodsSoldCosts = goodsSoldCosts);
+            return this;
+        }
+
+        public Builder withSellingCosts(Long sellingCosts) {
+            operations.add(e -> e.sellingCosts = sellingCosts);
+            return this;
+        }
+
+        public Builder withAdministrativeCosts(Long administrativeCosts) {
+            operations.add(e -> e.administrativeCosts = administrativeCosts);
+            return this;
+        }
+
+        public Builder withProfit(Long profit) {
+            operations.add(e -> e.profit = profit);
+            return this;
+        }
+
+        public Builder withOperatingIncome(Long operatingIncome) {
+            operations.add(e -> e.operatingIncome = operatingIncome);
+            return this;
+        }
+
+        public Builder withIncomeBeforeTaxes(Long incomeBeforeTaxes) {
+            operations.add(e -> e.incomeBeforeTaxes = incomeBeforeTaxes);
+            return this;
+        }
+
+        public Builder withNetIncome(Long netIncome) {
+            operations.add(e -> e.netIncome = netIncome);
+            return this;
+        }
+
+        public IncomeStatement build() {
+            IncomeStatement incomeStatement = new IncomeStatement();
+            operations.forEach(operation -> operation.accept(incomeStatement));
+            return incomeStatement;
+        }
+
     }
 
     public Long getRevenue() {
         return revenue;
     }
 
-    public void setRevenue(Long revenue) {
-        this.revenue = revenue;
-    }
-
     public Long getGoodsSoldCosts() {
         return goodsSoldCosts;
-    }
-
-    public void setGoodsSoldCosts(Long goodsSoldCosts) {
-        this.goodsSoldCosts = goodsSoldCosts;
     }
 
     public Long getSellingCosts() {
         return sellingCosts;
     }
 
-    public void setSellingCosts(Long sellingCosts) {
-        this.sellingCosts = sellingCosts;
-    }
-
     public Long getAdministrativeCosts() {
         return administrativeCosts;
-    }
-
-    public void setAdministrativeCosts(Long administrativeCosts) {
-        this.administrativeCosts = administrativeCosts;
     }
 
     public Long getProfit() {
         return profit;
     }
 
-    public void setProfit(Long profit) {
-        this.profit = profit;
-    }
-
     public Long getOperatingIncome() {
         return operatingIncome;
-    }
-
-    public void setOperatingIncome(Long operatingIncome) {
-        this.operatingIncome = operatingIncome;
     }
 
     public Long getIncomeBeforeTaxes() {
         return incomeBeforeTaxes;
     }
 
-    public void setIncomeBeforeTaxes(Long incomeBeforeTaxes) {
-        this.incomeBeforeTaxes = incomeBeforeTaxes;
-    }
-
     public Long getNetIncome() {
         return netIncome;
-    }
-
-    public void setNetIncome(Long netIncome) {
-        this.netIncome = netIncome;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        IncomeStatement that = (IncomeStatement) o;
-        return Objects.equals(revenue, that.revenue) &&
-                Objects.equals(goodsSoldCosts, that.goodsSoldCosts) &&
-                Objects.equals(sellingCosts, that.sellingCosts) &&
-                Objects.equals(administrativeCosts, that.administrativeCosts) &&
-                Objects.equals(profit, that.profit) &&
-                Objects.equals(operatingIncome, that.operatingIncome) &&
-                Objects.equals(incomeBeforeTaxes, that.incomeBeforeTaxes) &&
-                Objects.equals(netIncome, that.netIncome);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(revenue, goodsSoldCosts, sellingCosts, administrativeCosts, profit, operatingIncome, incomeBeforeTaxes, netIncome);
     }
 
     @Override
     public String toString() {
         return "IncomeStatement{" +
-                "id=" + getId() +
-                ", company=" + getCompany() +
-                ", date=" + getDate() +
+                "id=" + id +
+                ", company=" + company +
+                ", date=" + date +
                 ", revenue=" + revenue +
                 ", goodsSoldCosts=" + goodsSoldCosts +
                 ", sellingCosts=" + sellingCosts +

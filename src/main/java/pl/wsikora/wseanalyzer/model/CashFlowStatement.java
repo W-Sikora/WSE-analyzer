@@ -1,14 +1,21 @@
 package pl.wsikora.wseanalyzer.model;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Objects;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
 @Entity
 @Table(name = "cash_flow_statements")
-public class CashFlowStatement extends Statement {
+@JsonDeserialize(builder = CashFlowStatement.Builder.class)
+public final class CashFlowStatement extends Statement {
 
     @Column(name = "operating_activities")
     private Long operatingActivities;
@@ -23,63 +30,85 @@ public class CashFlowStatement extends Statement {
     private Long totalCashFlow;
 
     public CashFlowStatement() {
-        super();
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    @JsonPOJOBuilder
+    static final class Builder {
+        private final List<Consumer<CashFlowStatement>> operations;
+
+        private Builder() {
+            this.operations = new ArrayList<>();
+        }
+
+        public Builder withId(Long id) {
+            operations.add(e -> e.id = id);
+            return this;
+        }
+
+        public Builder withCompany(Company company) {
+            operations.add(e -> e.company = company);
+            return this;
+        }
+
+        public Builder withDate(LocalDate date) {
+            operations.add(e -> e.date = date);
+            return this;
+        }
+
+        public Builder withOperatingActivities(Long operatingActivities) {
+            operations.add(e -> e.operatingActivities = operatingActivities);
+            return this;
+        }
+
+        public Builder withInvestingActivities(Long investingActivities) {
+            operations.add(e -> e.investingActivities = investingActivities);
+            return this;
+        }
+
+        public Builder withFinancingActivities(Long financingActivities) {
+            operations.add(e -> e.financingActivities = financingActivities);
+            return this;
+        }
+
+        public Builder withTotalCashFlow(Long totalCashFlow) {
+            operations.add(e -> e.totalCashFlow = totalCashFlow);
+            return this;
+        }
+
+        public CashFlowStatement build() {
+            CashFlowStatement cashFlowStatement = new CashFlowStatement();
+            operations.forEach(operation -> operation.accept(cashFlowStatement));
+            return cashFlowStatement;
+        }
+
     }
 
     public Long getOperatingActivities() {
         return operatingActivities;
     }
 
-    public void setOperatingActivities(Long operatingActivities) {
-        this.operatingActivities = operatingActivities;
-    }
-
     public Long getInvestingActivities() {
         return investingActivities;
-    }
-
-    public void setInvestingActivities(Long investingActivities) {
-        this.investingActivities = investingActivities;
     }
 
     public Long getFinancingActivities() {
         return financingActivities;
     }
 
-    public void setFinancingActivities(Long financingActivities) {
-        this.financingActivities = financingActivities;
-    }
-
     public Long getTotalCashFlow() {
         return totalCashFlow;
-    }
-
-    public void setTotalCashFlow(Long totalCashFlow) {
-        this.totalCashFlow = totalCashFlow;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CashFlowStatement that = (CashFlowStatement) o;
-        return Objects.equals(operatingActivities, that.operatingActivities) &&
-                Objects.equals(investingActivities, that.investingActivities) &&
-                Objects.equals(financingActivities, that.financingActivities) &&
-                Objects.equals(totalCashFlow, that.totalCashFlow);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(operatingActivities, investingActivities, financingActivities, totalCashFlow);
     }
 
     @Override
     public String toString() {
         return "CashFlowStatement{" +
-                "id=" + getId() +
-                ", company=" + getCompany() +
-                ", date=" + getDate() +
+                "id=" + id +
+                ", company=" + company +
+                ", date=" + date +
                 ", operatingActivities=" + operatingActivities +
                 ", investingActivities=" + investingActivities +
                 ", financingActivities=" + financingActivities +

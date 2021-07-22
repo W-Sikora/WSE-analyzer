@@ -47,11 +47,11 @@ public final class CompanyGeneralInfo {
     }
 
     @JsonPOJOBuilder
-    public static final class Builder {
+    protected static final class Builder {
         private final List<Consumer<CompanyGeneralInfo>> operations;
 
         private Builder() {
-            this.operations = new ArrayList<>();
+            operations = new ArrayList<>();
         }
 
         public Builder withId(long id) {
