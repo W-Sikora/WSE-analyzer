@@ -12,6 +12,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 import static javax.persistence.GenerationType.IDENTITY;
+import static pl.wsikora.wseanalyzer.util.Utils.valueChanged;
 
 @Entity
 @Table(name = "companies_general_info")
@@ -42,12 +43,8 @@ public class CompanyGeneralInfo {
     public CompanyGeneralInfo() {
     }
 
-    public static Builder builder() {
-        return new Builder();
-    }
-
     @JsonPOJOBuilder
-    protected static final class Builder {
+    public static final class Builder {
         private final List<Consumer<CompanyGeneralInfo>> operations;
 
         private Builder() {
@@ -69,7 +66,7 @@ public class CompanyGeneralInfo {
             return this;
         }
 
-        public Builder withSharesNumber(long sharesNumber) {
+        public Builder withSharesNumber(Long sharesNumber) {
             operations.add(e -> e.sharesNumber = sharesNumber);
             return this;
         }
@@ -84,7 +81,7 @@ public class CompanyGeneralInfo {
             return this;
         }
 
-        public Builder withEmployeesNumber(int employeesNumber) {
+        public Builder withEmployeesNumber(Integer employeesNumber) {
             operations.add(e -> e.employeesNumber = employeesNumber);
             return this;
         }
@@ -95,6 +92,22 @@ public class CompanyGeneralInfo {
             return companyGeneralInfo;
         }
 
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public CompanyGeneralInfo merge(CompanyGeneralInfo companyGeneralInfo) {
+        return CompanyGeneralInfo.builder()
+                .withId(this.id)
+                .withCompany(valueChanged(this.company, companyGeneralInfo.company))
+                .withDebutDate(valueChanged(this.debutDate, companyGeneralInfo.debutDate))
+                .withSharesNumber(valueChanged(this.sharesNumber, companyGeneralInfo.sharesNumber))
+                .withLocation(valueChanged(this.location, companyGeneralInfo.location))
+                .withCeo(valueChanged(this.ceo, companyGeneralInfo.ceo))
+                .withEmployeesNumber(valueChanged(this.employeesNumber, companyGeneralInfo.employeesNumber))
+                .build();
     }
 
     public Long getId() {

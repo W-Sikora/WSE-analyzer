@@ -16,12 +16,12 @@ public class CashFlowStatementCollector extends StatementCollector {
     @Override
     public CashFlowStatement form(int index) {
         CashFlowStatement cashFlowStatement = new CashFlowStatement();
-        cashFlowStatement.setCompany(company);
-        setDate(index, cashFlowStatement::setDate);
-        setSingleValue("CashflowOperatingCashflow", index, cashFlowStatement::setOperatingActivities);
-        setSingleValue("CashflowInvestingCashflow", index, cashFlowStatement::setInvestingActivities);
-        setSingleValue("CashflowFinancingCashflow", index, cashFlowStatement::setFinancingActivities);
-        setSingleValue("CashflowNetCashflow", index, cashFlowStatement::setTotalCashFlow);
+//        cashFlowStatement.setCompany(company);
+//        setDate(index, cashFlowStatement::setDate);
+//        setSingleValue("CashflowOperatingCashflow", index, cashFlowStatement::setOperatingActivities);
+//        setSingleValue("CashflowInvestingCashflow", index, cashFlowStatement::setInvestingActivities);
+//        setSingleValue("CashflowFinancingCashflow", index, cashFlowStatement::setFinancingActivities);
+//        setSingleValue("CashflowNetCashflow", index, cashFlowStatement::setTotalCashFlow);
         return cashFlowStatement;
     }
 

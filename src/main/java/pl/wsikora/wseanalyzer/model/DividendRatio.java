@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static pl.wsikora.wseanalyzer.util.Utils.valueChanged;
+
 @Entity
 @Table(name = "dividend_ratios")
 @JsonDeserialize(builder = DividendRatio.Builder.class)
@@ -19,12 +21,8 @@ public class DividendRatio extends Ratio {
     public DividendRatio() {
     }
 
-    public static Builder builder() {
-        return new Builder();
-    }
-
     @JsonPOJOBuilder
-    static final class Builder {
+    public static final class Builder {
         private final List<Consumer<DividendRatio>> operations;
 
         private Builder() {
@@ -67,6 +65,21 @@ public class DividendRatio extends Ratio {
             return dividendRatio;
         }
 
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public DividendRatio merge(DividendRatio dividendRatio) {
+        return DividendRatio.builder()
+                .withId(this.id)
+                .withCompany(valueChanged(this.company, dividendRatio.company))
+                .withDate(valueChanged(this.date, dividendRatio.date))
+                .withName(valueChanged(this.name, dividendRatio.name))
+                .withShortcut(valueChanged(this.shortcut, dividendRatio.shortcut))
+                .withValue(valueChanged(this.value, dividendRatio.value))
+                .build();
     }
 
     @Override

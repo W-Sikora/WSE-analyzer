@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static pl.wsikora.wseanalyzer.util.Utils.valueChanged;
+
 @Entity
 @Table(name = "income_statements")
 @JsonDeserialize(builder = IncomeStatement.Builder.class)
@@ -40,11 +42,7 @@ public class IncomeStatement extends Statement {
     public IncomeStatement() {
     }
 
-    public Builder builder() {
-        return new Builder();
-    }
-
-    static final class Builder {
+    public static final class Builder {
         private final List<Consumer<IncomeStatement>> operations;
 
         private Builder() {
@@ -112,6 +110,26 @@ public class IncomeStatement extends Statement {
             return incomeStatement;
         }
 
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public IncomeStatement merge(IncomeStatement incomeStatement) {
+        return IncomeStatement.builder()
+                .withId(this.id)
+                .withCompany(valueChanged(this.company, incomeStatement.company))
+                .withDate(valueChanged(this.date, incomeStatement.date))
+                .withRevenue(valueChanged(this.revenue, incomeStatement.revenue))
+                .withGoodsSoldCosts(valueChanged(this.goodsSoldCosts, incomeStatement.goodsSoldCosts))
+                .withSellingCosts(valueChanged(this.sellingCosts, incomeStatement.sellingCosts))
+                .withAdministrativeCosts(valueChanged(this.administrativeCosts, incomeStatement.administrativeCosts))
+                .withProfit(valueChanged(this.profit, incomeStatement.profit))
+                .withOperatingIncome(valueChanged(this.operatingIncome, incomeStatement.operatingIncome))
+                .withIncomeBeforeTaxes(valueChanged(this.incomeBeforeTaxes, incomeStatement.incomeBeforeTaxes))
+                .withNetIncome(valueChanged(this.netIncome, incomeStatement.netIncome))
+                .build();
     }
 
     public Long getRevenue() {

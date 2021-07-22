@@ -13,6 +13,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 import static javax.persistence.GenerationType.IDENTITY;
+import static pl.wsikora.wseanalyzer.util.Utils.valueChanged;
 
 @Entity
 @Table(name = "dividends")
@@ -44,13 +45,9 @@ public class Dividend {
 
     public Dividend() {
     }
-    
-    public static Builder builder() {
-        return new Builder();
-    }
 
     @JsonPOJOBuilder
-    protected static final class Builder {
+    public static final class Builder {
         private final List<Consumer<Dividend>> operations;
 
         private Builder() {
@@ -98,6 +95,22 @@ public class Dividend {
             return dividend;
         }
 
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public Dividend merge(Dividend dividend) {
+        return Dividend.builder()
+                .withId(this.id)
+                .withCompany(valueChanged(this.company, dividend.company))
+                .withDividendPerShare(valueChanged(this.dividendPerShare, dividend.dividendPerShare))
+                .withDividendValue(valueChanged(this.dividendValue, dividend.dividendValue))
+                .withSupplementaryCapitalContribution(valueChanged(this.supplementaryCapitalContribution, dividend.supplementaryCapitalContribution))
+                .withExDate(valueChanged(this.exDate, dividend.exDate))
+                .withPaymentDate(valueChanged(this.paymentDate, dividend.paymentDate))
+                .build();
     }
     
     public Long getId() {

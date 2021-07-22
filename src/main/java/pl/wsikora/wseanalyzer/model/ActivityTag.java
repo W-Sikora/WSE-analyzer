@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 import static javax.persistence.GenerationType.IDENTITY;
+import static pl.wsikora.wseanalyzer.util.Utils.valueChanged;
 
 @Entity
 @Table(name = "activity_tags")
@@ -25,12 +26,8 @@ public class ActivityTag {
     public ActivityTag() {
     }
 
-    public Builder builder() {
-        return new Builder();
-    }
-
     @JsonPOJOBuilder
-    static final class Builder {
+    public static final class Builder {
         private final List<Consumer<ActivityTag>> operations;
 
         private Builder() {
@@ -53,6 +50,17 @@ public class ActivityTag {
             return activityTag;
         }
 
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public ActivityTag merge(ActivityTag activityTag) {
+        return ActivityTag.builder()
+                .withId(this.id)
+                .withTagName(valueChanged(this.tagName, activityTag.tagName))
+                .build();
     }
 
     public Long getId() {

@@ -16,18 +16,18 @@ public class BalanceSheetCollector extends StatementCollector {
     @Override
     public BalanceSheet form(int index) {
         BalanceSheet balanceSheet = new BalanceSheet();
-        balanceSheet.setCompany(company);
-        setDate(index, balanceSheet::setDate);
-        setSingleValue("BalanceNoncurrentAssets", index, balanceSheet::setFixedAsset);
-        setSingleValue("BalanceCurrentAssets", index, balanceSheet::setCurrentAsset);
-        setSingleValue("BalanceTotalAssets", index, balanceSheet::setTotalAssets);
-        setSingleValue("BalanceCurrentReceivables", index, balanceSheet::setCurrentReceivables);
-        setSingleValue("BalanceCurrentInvestments", index, balanceSheet::setCurrentInvestments);
-        setSingleValue("BalanceCash", index, balanceSheet::setCashAndEquivalents);
-        setSingleValue("BalanceCapital", index, balanceSheet::setShareholdersEquity);
-        setSingleValue("BalanceNoncurrentLiabilities", index, balanceSheet::setLongTermLiabilities);
-        setSingleValue("BalanceCurrentLiabilities", index, balanceSheet::setCurrentLiabilities);
-        setSingleValue("BalanceTotalEquityAndLiabilities", index, balanceSheet::setTotalLiabilitiesAndEquity);
+//        balanceSheet.setCompany(company);
+//        setDate(index, balanceSheet::setDate);
+//        setSingleValue("BalanceNoncurrentAssets", index, balanceSheet::setFixedAsset);
+//        setSingleValue("BalanceCurrentAssets", index, balanceSheet::setCurrentAsset);
+//        setSingleValue("BalanceTotalAssets", index, balanceSheet::setTotalAssets);
+//        setSingleValue("BalanceCurrentReceivables", index, balanceSheet::setCurrentReceivables);
+//        setSingleValue("BalanceCurrentInvestments", index, balanceSheet::setCurrentInvestments);
+//        setSingleValue("BalanceCash", index, balanceSheet::setCashAndEquivalents);
+//        setSingleValue("BalanceCapital", index, balanceSheet::setShareholdersEquity);
+//        setSingleValue("BalanceNoncurrentLiabilities", index, balanceSheet::setLongTermLiabilities);
+//        setSingleValue("BalanceCurrentLiabilities", index, balanceSheet::setCurrentLiabilities);
+//        setSingleValue("BalanceTotalEquityAndLiabilities", index, balanceSheet::setTotalLiabilitiesAndEquity);
         return balanceSheet;
     }
 

@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static pl.wsikora.wseanalyzer.util.Utils.valueChanged;
+
 @Entity
 @Table(name = "market_value_ratios")
 @JsonDeserialize(builder = MarketValueRatio.Builder.class)
@@ -19,12 +21,8 @@ public class MarketValueRatio extends Ratio {
     public MarketValueRatio() {
     }
 
-    public static Builder builder() {
-        return new Builder();
-    }
-
     @JsonPOJOBuilder
-    static final class Builder {
+    public static final class Builder {
         private final List<Consumer<MarketValueRatio>> operations;
 
         private Builder() {
@@ -67,6 +65,21 @@ public class MarketValueRatio extends Ratio {
             return marketValueRatio;
         }
 
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public MarketValueRatio merge(MarketValueRatio marketValueRatio) {
+        return MarketValueRatio.builder()
+                .withId(this.id)
+                .withCompany(valueChanged(this.company, marketValueRatio.company))
+                .withDate(valueChanged(this.date, marketValueRatio.date))
+                .withName(valueChanged(this.name, marketValueRatio.name))
+                .withShortcut(valueChanged(this.shortcut, marketValueRatio.shortcut))
+                .withValue(valueChanged(this.value, marketValueRatio.value))
+                .build();
     }
 
     @Override

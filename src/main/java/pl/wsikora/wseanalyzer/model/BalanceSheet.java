@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static pl.wsikora.wseanalyzer.util.Utils.valueChanged;
+
 @Entity
 @Table(name = "balance_sheets")
 @JsonDeserialize(builder = BalanceSheet.Builder.class)
@@ -49,12 +51,8 @@ public class BalanceSheet extends Statement {
     public BalanceSheet() {
     }
 
-    public static Builder builder() {
-        return new Builder();
-    }
-
     @JsonPOJOBuilder
-    static final class Builder {
+    public static final class Builder {
         private final List<Consumer<BalanceSheet>> operations;
 
         private Builder() {
@@ -132,6 +130,28 @@ public class BalanceSheet extends Statement {
             return balanceSheet;
         }
 
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public BalanceSheet merge(BalanceSheet balanceSheet) {
+        return BalanceSheet.builder()
+                .withId(this.id)
+                .withCompany(valueChanged(this.company, balanceSheet.company))
+                .withDate(valueChanged(this.date, balanceSheet.date))
+                .withFixedAsset(valueChanged(this.fixedAsset, balanceSheet.fixedAsset))
+                .withCurrentAsset(valueChanged(this.currentAsset, balanceSheet.currentAsset))
+                .withTotalAssets(valueChanged(this.totalAssets, balanceSheet.totalAssets))
+                .withCurrentReceivables(valueChanged(this.currentReceivables, balanceSheet.currentReceivables))
+                .withCurrentInvestments(valueChanged(this.currentInvestments, balanceSheet.currentInvestments))
+                .withCashAndEquivalents(valueChanged(this.cashAndEquivalents, balanceSheet.cashAndEquivalents))
+                .withShareholdersEquity(valueChanged(this.shareholdersEquity, balanceSheet.shareholdersEquity))
+                .withLongTermLiabilities(valueChanged(this.longTermLiabilities, balanceSheet.longTermLiabilities))
+                .withCurrentLiabilities(valueChanged(this.currentLiabilities, balanceSheet.currentLiabilities))
+                .withTotalLiabilitiesAndEquity(valueChanged(this.totalLiabilitiesAndEquity, balanceSheet.totalLiabilitiesAndEquity))
+                .build();
     }
 
     public Long getFixedAsset() {

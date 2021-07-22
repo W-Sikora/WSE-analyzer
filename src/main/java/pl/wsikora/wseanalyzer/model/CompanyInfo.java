@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 import static javax.persistence.GenerationType.IDENTITY;
+import static pl.wsikora.wseanalyzer.util.Utils.valueChanged;
 
 @Entity
 @Table(name = "companies_info")
@@ -37,12 +38,8 @@ public class CompanyInfo {
     public CompanyInfo() {
     }
 
-    public static Builder builder() {
-        return new Builder();
-    }
-
     @JsonPOJOBuilder
-    protected static final class Builder {
+    public static final class Builder {
         private final List<Consumer<CompanyInfo>> operations;
 
         private Builder() {
@@ -80,6 +77,20 @@ public class CompanyInfo {
             return companyInfo;
         }
 
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public CompanyInfo merge(CompanyInfo companyInfo) {
+        return CompanyInfo.builder()
+                .withId(this.id)
+                .withCompany(valueChanged(this.company, companyInfo.company))
+                .withStockExchange(valueChanged(this.stockExchange, companyInfo.stockExchange))
+                .withIndustry(valueChanged(this.industry, companyInfo.industry))
+                .withActivityTags(valueChanged(this.activityTags, companyInfo.activityTags))
+                .build();
     }
 
     public Long getId() {

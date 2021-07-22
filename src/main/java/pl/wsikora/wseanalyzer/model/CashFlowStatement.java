@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static pl.wsikora.wseanalyzer.util.Utils.valueChanged;
+
 @Entity
 @Table(name = "cash_flow_statements")
 @JsonDeserialize(builder = CashFlowStatement.Builder.class)
@@ -32,12 +34,8 @@ public class CashFlowStatement extends Statement {
     public CashFlowStatement() {
     }
 
-    public static Builder builder() {
-        return new Builder();
-    }
-
     @JsonPOJOBuilder
-    static final class Builder {
+    public static final class Builder {
         private final List<Consumer<CashFlowStatement>> operations;
 
         private Builder() {
@@ -85,6 +83,22 @@ public class CashFlowStatement extends Statement {
             return cashFlowStatement;
         }
 
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public CashFlowStatement merge(CashFlowStatement cashFlowStatement) {
+        return CashFlowStatement.builder()
+                .withId(this.id)
+                .withCompany(valueChanged(this.company, cashFlowStatement.company))
+                .withDate(valueChanged(this.date, cashFlowStatement.date))
+                .withOperatingActivities(valueChanged(this.operatingActivities, cashFlowStatement.operatingActivities))
+                .withInvestingActivities(valueChanged(this.investingActivities, cashFlowStatement.investingActivities))
+                .withFinancingActivities(valueChanged(this.financingActivities, cashFlowStatement.financingActivities))
+                .withTotalCashFlow(valueChanged(this.totalCashFlow, cashFlowStatement.totalCashFlow))
+                .build();
     }
 
     public Long getOperatingActivities() {
