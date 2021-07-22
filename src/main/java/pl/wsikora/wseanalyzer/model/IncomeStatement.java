@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 @Entity
 @Table(name = "income_statements")
 @JsonDeserialize(builder = IncomeStatement.Builder.class)
-public final class IncomeStatement extends Statement {
+public class IncomeStatement extends Statement {
 
     private Long revenue;
 

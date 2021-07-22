@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 @Entity
 @Table(name = "cash_flow_statements")
 @JsonDeserialize(builder = CashFlowStatement.Builder.class)
-public final class CashFlowStatement extends Statement {
+public class CashFlowStatement extends Statement {
 
     @Column(name = "operating_activities")
     private Long operatingActivities;

@@ -15,7 +15,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Table(name = "popularities")
 @JsonDeserialize(builder = Popularity.Builder.class)
-public final class Popularity {
+public class Popularity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)

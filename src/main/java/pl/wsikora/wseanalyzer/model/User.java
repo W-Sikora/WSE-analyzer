@@ -15,7 +15,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Table(name = "users")
 @JsonDeserialize(builder = User.Builder.class)
-public final class User {
+public class User {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;

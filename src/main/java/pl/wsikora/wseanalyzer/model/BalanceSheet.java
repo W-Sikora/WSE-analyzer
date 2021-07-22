@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 @Entity
 @Table(name = "balance_sheets")
 @JsonDeserialize(builder = BalanceSheet.Builder.class)
-public final class BalanceSheet extends Statement {
+public class BalanceSheet extends Statement {
 
     @Column(name = "fixed_asset")
     private Long fixedAsset;

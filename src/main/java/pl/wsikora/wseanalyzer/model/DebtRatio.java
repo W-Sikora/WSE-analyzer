@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 @Entity
 @Table(name = "debt_ratios")
 @JsonDeserialize(builder = DebtRatio.Builder.class)
-public final class DebtRatio extends Ratio {
+public class DebtRatio extends Ratio {
 
     public DebtRatio() {
     }

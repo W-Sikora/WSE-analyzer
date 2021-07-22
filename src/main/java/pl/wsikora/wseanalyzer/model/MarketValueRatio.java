@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 @Entity
 @Table(name = "market_value_ratios")
 @JsonDeserialize(builder = MarketValueRatio.Builder.class)
-public final class MarketValueRatio extends Ratio {
+public class MarketValueRatio extends Ratio {
 
     public MarketValueRatio() {
     }
