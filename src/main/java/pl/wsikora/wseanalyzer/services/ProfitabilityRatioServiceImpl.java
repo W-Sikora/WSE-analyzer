@@ -2,6 +2,7 @@ package pl.wsikora.wseanalyzer.services;
 
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import pl.wsikora.wseanalyzer.controllers.api.exception.ResourceNotFoundException;
 import pl.wsikora.wseanalyzer.model.ProfitabilityRatio;
 import pl.wsikora.wseanalyzer.repositories.ProfitabilityRatioRepository;
@@ -9,6 +10,7 @@ import pl.wsikora.wseanalyzer.repositories.ProfitabilityRatioRepository;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ProfitabilityRatioServiceImpl implements ProfitabilityRatioService {
 
     private final ProfitabilityRatioRepository repository;

@@ -2,6 +2,7 @@ package pl.wsikora.wseanalyzer.services;
 
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import pl.wsikora.wseanalyzer.controllers.api.exception.ResourceNotFoundException;
 import pl.wsikora.wseanalyzer.model.Shareholder;
 import pl.wsikora.wseanalyzer.model.Shareholding;
@@ -10,6 +11,7 @@ import pl.wsikora.wseanalyzer.repositories.ShareholdingRepository;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ShareholdingServiceImpl implements ShareholdingService {
 
     private final ShareholdingRepository repository;

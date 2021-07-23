@@ -1,6 +1,7 @@
 package pl.wsikora.wseanalyzer.services;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import pl.wsikora.wseanalyzer.controllers.api.exception.ResourceNotFoundException;
 import pl.wsikora.wseanalyzer.model.CashFlowStatement;
 import pl.wsikora.wseanalyzer.repositories.CashFlowStatementRepository;
@@ -8,6 +9,7 @@ import pl.wsikora.wseanalyzer.repositories.CashFlowStatementRepository;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class CashFlowStatementServiceImpl implements CashFlowStatementService {
 
     private final CashFlowStatementRepository repository;

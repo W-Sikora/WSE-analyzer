@@ -1,6 +1,7 @@
 package pl.wsikora.wseanalyzer.services;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import pl.wsikora.wseanalyzer.controllers.api.exception.ResourceNotFoundException;
 import pl.wsikora.wseanalyzer.model.Price;
 import pl.wsikora.wseanalyzer.repositories.PriceRepository;
@@ -8,6 +9,7 @@ import pl.wsikora.wseanalyzer.repositories.PriceRepository;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class PriceServiceImpl implements PriceService {
 
     private final PriceRepository repository;

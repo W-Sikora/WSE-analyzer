@@ -1,6 +1,7 @@
 package pl.wsikora.wseanalyzer.services;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import pl.wsikora.wseanalyzer.controllers.api.exception.ResourceNotFoundException;
 import pl.wsikora.wseanalyzer.model.BalanceSheet;
 import pl.wsikora.wseanalyzer.repositories.BalanceSheetRepository;
@@ -8,6 +9,7 @@ import pl.wsikora.wseanalyzer.repositories.BalanceSheetRepository;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class BalanceSheetServiceImpl implements BalanceSheetService {
 
     private final BalanceSheetRepository repository;

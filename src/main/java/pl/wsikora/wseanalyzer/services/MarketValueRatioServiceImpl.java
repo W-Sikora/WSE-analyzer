@@ -1,6 +1,7 @@
 package pl.wsikora.wseanalyzer.services;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import pl.wsikora.wseanalyzer.controllers.api.exception.ResourceNotFoundException;
 import pl.wsikora.wseanalyzer.model.MarketValueRatio;
 import pl.wsikora.wseanalyzer.repositories.MarketValueRatioRepository;
@@ -8,6 +9,7 @@ import pl.wsikora.wseanalyzer.repositories.MarketValueRatioRepository;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class MarketValueRatioServiceImpl implements MarketValueRatioService {
 
     private final MarketValueRatioRepository repository;
