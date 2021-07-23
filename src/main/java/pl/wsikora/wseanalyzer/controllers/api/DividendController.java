@@ -9,8 +9,6 @@ import pl.wsikora.wseanalyzer.services.DividendService;
 
 import java.util.List;
 
-import static pl.wsikora.wseanalyzer.util.Utils.makeNewUri;
-
 @RestController
 @RequestMapping(value = "/api/v1/dividends")
 public class DividendController implements REST<Dividend> {
@@ -33,9 +31,9 @@ public class DividendController implements REST<Dividend> {
 
     @Override
     public ResponseEntity<Dividend> create(Dividend dividend) {
-        Dividend createdDividend = service.create(dividend);
-        return ResponseEntity.created(makeNewUri(createdDividend.getId()))
-                .body(createdDividend);
+        Dividend newDividend = service.create(dividend);
+        return ResponseEntity.created(makeNewUri(newDividend.getId()))
+                .body(newDividend);
     }
 
     @Override

@@ -1,56 +1,50 @@
 package pl.wsikora.wseanalyzer.controllers.api;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.wsikora.wseanalyzer.model.Price;
+import pl.wsikora.wseanalyzer.services.PriceService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/prices")
-public class PriceController {
+public class PriceController implements REST<Price> {
 
-    @GetMapping(produces = "application/json")
-    public ResponseEntity<?> getAll() {
-        throw new IllegalArgumentException("not implemented yet");
+    private final PriceService service;
+
+    public PriceController(PriceService service) {
+        this.service = service;
     }
 
-    @GetMapping(path = "/{id}", produces = "application/json")
-    public ResponseEntity<?> getOne(@PathVariable long id) {
-        throw new IllegalArgumentException("not implemented yet");
+    @Override
+    public ResponseEntity<List<Price>> getPart(Pageable pageable) {
+        return ResponseEntity.ok(service.getPart(pageable));
     }
 
-    @GetMapping(path = "/industries/{industryId}", produces = "application/json")
-    public ResponseEntity<?> getAllByIndustry(@PathVariable long industryId) {
-        throw new IllegalArgumentException("not implemented yet");
+    @Override
+    public ResponseEntity<Price> getSingle(long id) {
+        return ResponseEntity.of(service.getSingle(id));
     }
 
-    @GetMapping(path = "/activity_tags/{activityTagId}", produces = "application/json")
-    public ResponseEntity<?> getAllByActivityTag(@PathVariable long activityTagId) {
-        throw new IllegalArgumentException("not implemented yet");
+    @Override
+    public ResponseEntity<Price> create(Price price) {
+        Price newPrice = service.create(price);
+        return ResponseEntity.created(makeNewUri(newPrice.getId()))
+                .body(newPrice);
     }
 
-    @GetMapping(path = "/stock_exchanges/{stockExchangeId}", produces = "application/json")
-    public ResponseEntity<?> getAllByStockExchange(@PathVariable long stockExchangeId) {
-        throw new IllegalArgumentException("not implemented yet");
+    @Override
+    public ResponseEntity<Price> update(long id, Price price) {
+        return ResponseEntity.ok(service.update(id, price));
     }
 
-    @GetMapping("/companies/{companyId}")
-    public ResponseEntity<?> getAllByCompany(@PathVariable long companyId) {
-        throw new IllegalArgumentException("not implemented yet");
-    }
-
-    @PostMapping
-    public ResponseEntity<?> create(@RequestBody Price price) {
-        throw new IllegalArgumentException("not implemented yet");
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable long id, @RequestBody Price price) {
-        throw new IllegalArgumentException("not implemented yet");
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable long id) {
-        throw new IllegalArgumentException("not implemented yet");
+    @Override
+    public ResponseEntity<Void> delete(long id) {
+        service.delete(id);
+        return ResponseEntity.noContent()
+                .build();
     }
 
 }

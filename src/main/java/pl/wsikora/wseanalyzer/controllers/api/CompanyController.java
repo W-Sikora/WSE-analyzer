@@ -9,9 +9,6 @@ import pl.wsikora.wseanalyzer.services.CompanyService;
 
 import java.util.List;
 
-import static pl.wsikora.wseanalyzer.util.Utils.makeNewUri;
-
-
 @RestController
 @RequestMapping(value = "api/v1/companies", produces = "application/json")
 public class CompanyController implements REST<Company> {

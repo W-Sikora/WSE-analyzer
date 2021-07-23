@@ -8,12 +8,10 @@ import pl.wsikora.wseanalyzer.services.CompanyInfoService;
 
 import java.util.List;
 
-import static pl.wsikora.wseanalyzer.util.Utils.makeNewUri;
-
 
 @RestController
 @RequestMapping(value = "api/v1/companies_info", produces = "application/json")
-public class CompanyInfoController {
+public class CompanyInfoController implements REST<CompanyInfo> {
 
     private final CompanyInfoService service;
 
@@ -21,30 +19,30 @@ public class CompanyInfoController {
         this.service = service;
     }
 
-    @GetMapping
+    @Override
     public ResponseEntity<List<CompanyInfo>> getPart(Pageable pageable) {
         return ResponseEntity.ok(service.getPart(pageable));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CompanyInfo> getSingle(@PathVariable long id) {
+    @Override
+    public ResponseEntity<CompanyInfo> getSingle(long id) {
         return ResponseEntity.of(service.getSingle(id));
     }
 
-    @PostMapping
-    public ResponseEntity<CompanyInfo> create(@RequestBody CompanyInfo companyInfo) {
-        CompanyInfo createdCompany = service.create(companyInfo);
-        return ResponseEntity.created(makeNewUri(createdCompany.getId()))
-                .body(createdCompany);
+    @Override
+    public ResponseEntity<CompanyInfo> create(CompanyInfo companyInfo) {
+        CompanyInfo newCompanyInfo = service.create(companyInfo);
+        return ResponseEntity.created(makeNewUri(newCompanyInfo.getId()))
+                .body(newCompanyInfo);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<CompanyInfo> update(@PathVariable long id, @RequestBody CompanyInfo companyInfo) {
+    @Override
+    public ResponseEntity<CompanyInfo> update(long id, CompanyInfo companyInfo) {
         return ResponseEntity.ok(service.update(id, companyInfo));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<CompanyInfo> delete(@PathVariable long id) {
+    @Override
+    public ResponseEntity<Void> delete(long id) {
         service.delete(id);
         return ResponseEntity.noContent()
                 .build();

@@ -22,27 +22,31 @@ public class PopularityController implements REST<Popularity> {
 
     @Override
     public ResponseEntity<List<Popularity>> getPart(Pageable pageable) {
-        return null;
+        return ResponseEntity.ok(service.getPart(pageable));
     }
 
     @Override
     public ResponseEntity<Popularity> getSingle(long id) {
-        return null;
+        return ResponseEntity.of(service.getSingle(id));
     }
 
     @Override
     public ResponseEntity<Popularity> create(Popularity popularity) {
-        return null;
+        Popularity newPopularity = service.create(popularity);
+        return ResponseEntity.created(makeNewUri(newPopularity.getId()))
+                .body(newPopularity);
     }
 
     @Override
     public ResponseEntity<Popularity> update(long id, Popularity popularity) {
-        return null;
+        return ResponseEntity.ok(service.update(id, popularity));
     }
 
     @Override
     public ResponseEntity<Void> delete(long id) {
-        return null;
+        service.delete(id);
+        return ResponseEntity.noContent()
+                .build();
     }
 
 }

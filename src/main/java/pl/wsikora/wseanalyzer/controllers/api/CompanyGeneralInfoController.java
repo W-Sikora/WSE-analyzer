@@ -8,12 +8,9 @@ import pl.wsikora.wseanalyzer.services.CompanyGeneralInfoService;
 
 import java.util.List;
 
-import static pl.wsikora.wseanalyzer.util.Utils.makeNewUri;
-
-
 @RestController
 @RequestMapping(value = "api/v1/companies_general_info", produces = "application/json")
-public class CompanyGeneralInfoController {
+public class CompanyGeneralInfoController implements REST<CompanyGeneralInfo> {
 
     private final CompanyGeneralInfoService service;
 
@@ -21,30 +18,30 @@ public class CompanyGeneralInfoController {
         this.service = service;
     }
 
-    @GetMapping
+    @Override
     public ResponseEntity<List<CompanyGeneralInfo>> getPart(Pageable pageable) {
         return ResponseEntity.ok(service.getPart(pageable));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CompanyGeneralInfo> getSingle(@PathVariable long id) {
+    @Override
+    public ResponseEntity<CompanyGeneralInfo> getSingle(long id) {
         return ResponseEntity.of(service.getSingle(id));
     }
 
-    @PostMapping
-    public ResponseEntity<CompanyGeneralInfo> create(@RequestBody CompanyGeneralInfo companyGeneralInfo) {
-        CompanyGeneralInfo createdCompany = service.create(companyGeneralInfo);
-        return ResponseEntity.created(makeNewUri(createdCompany.getId()))
-                .body(createdCompany);
+    @Override
+    public ResponseEntity<CompanyGeneralInfo> create(CompanyGeneralInfo companyGeneralInfo) {
+        CompanyGeneralInfo newCompanyGeneralInfo = service.create(companyGeneralInfo);
+        return ResponseEntity.created(makeNewUri(newCompanyGeneralInfo.getId()))
+                .body(newCompanyGeneralInfo);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<CompanyGeneralInfo> update(@PathVariable long id, @RequestBody CompanyGeneralInfo companyGeneralInfo) {
+    @Override
+    public ResponseEntity<CompanyGeneralInfo> update(long id, CompanyGeneralInfo companyGeneralInfo) {
         return ResponseEntity.ok(service.update(id, companyGeneralInfo));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<CompanyGeneralInfo> delete(@PathVariable long id) {
+    @Override
+    public ResponseEntity<Void> delete(long id) {
         service.delete(id);
         return ResponseEntity.noContent()
                 .build();
