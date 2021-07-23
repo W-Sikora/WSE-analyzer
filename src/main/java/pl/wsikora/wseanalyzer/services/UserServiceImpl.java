@@ -35,9 +35,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User update(long id, User user) {
         return repository.findById(id)
-                .map(updatedUser -> {
-                    return updatedUser;
-                })
+                .map(existing -> repository.save(existing.merge(user)))
                 .orElseThrow(() -> new ResourceNotFoundException(User.class, id));
     }
 

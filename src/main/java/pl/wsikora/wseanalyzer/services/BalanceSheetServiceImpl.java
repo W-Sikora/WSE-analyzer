@@ -35,9 +35,7 @@ public class BalanceSheetServiceImpl implements BalanceSheetService {
     @Override
     public BalanceSheet update(long id, BalanceSheet balanceSheet) {
         return repository.findById(id)
-                .map(updatedBalanceSheet -> {
-                    return updatedBalanceSheet;
-                })
+                .map(existing -> repository.save(existing.merge(balanceSheet)))
                 .orElseThrow(() -> new ResourceNotFoundException(BalanceSheet.class, id));
     }
 

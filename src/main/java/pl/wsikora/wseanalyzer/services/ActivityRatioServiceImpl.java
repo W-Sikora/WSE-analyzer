@@ -6,7 +6,6 @@ import pl.wsikora.wseanalyzer.controllers.api.exception.ResourceNotFoundExceptio
 import pl.wsikora.wseanalyzer.model.ActivityRatio;
 import pl.wsikora.wseanalyzer.repositories.ActivityRatioRepository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,12 +35,9 @@ public class ActivityRatioServiceImpl implements ActivityRatioService {
     }
 
     @Override
-    @Transactional
     public ActivityRatio update(long id, ActivityRatio activityRatio) {
         return repository.findById(id)
-                .map(updatedActivityRatio -> {
-                    return updatedActivityRatio;
-                })
+                .map(existing -> repository.save(existing.merge(activityRatio)))
                 .orElseThrow(() -> new ResourceNotFoundException(ActivityRatio.class, id));
     }
 

@@ -6,8 +6,6 @@ import pl.wsikora.wseanalyzer.controllers.api.exception.ResourceNotFoundExceptio
 import pl.wsikora.wseanalyzer.model.Company;
 import pl.wsikora.wseanalyzer.repositories.CompanyRepository;
 
-import javax.transaction.Transactional;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -37,17 +35,9 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    @Transactional
     public Company update(long id, Company company) {
         return repository.findById(id)
-                .map(updatedCompany -> {
-                    updatedCompany.setBankerAcronym(company.getBankerAcronym());
-                    updatedCompany.setBusinessRadarAcronym(company.getBusinessRadarAcronym());
-                    updatedCompany.setTicker(company.getTicker());
-                    updatedCompany.setName(company.getName());
-                    updatedCompany.setIsin(company.getIsin());
-                    return updatedCompany;
-                })
+                .map(existing -> repository.save(existing.merge(company)))
                 .orElseThrow(() -> new ResourceNotFoundException(Company.class, id));
     }
 

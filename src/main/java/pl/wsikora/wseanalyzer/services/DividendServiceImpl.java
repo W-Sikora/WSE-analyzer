@@ -37,15 +37,7 @@ public class DividendServiceImpl implements DividendService {
     @Override
     public Dividend update(long id, Dividend dividend) {
         return repository.findById(id)
-                .map(updatedDividend -> {
-                    updatedDividend.setCompany(dividend.getCompany());
-                    updatedDividend.setDividendPerShare(dividend.getDividendPerShare());
-                    updatedDividend.setDividendValue(dividend.getDividendValue());
-                    updatedDividend.setExDate(dividend.getExDate());
-                    updatedDividend.setPaymentDate(dividend.getPaymentDate());
-                    updatedDividend.setSupplementaryCapitalContribution(dividend.getSupplementaryCapitalContribution());
-                    return updatedDividend;
-                })
+                .map(existing -> repository.save(existing.merge(dividend)))
                 .orElseThrow(() -> new ResourceNotFoundException(Dividend.class, id));
     }
 

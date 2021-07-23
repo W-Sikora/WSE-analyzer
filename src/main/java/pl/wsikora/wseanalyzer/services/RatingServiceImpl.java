@@ -35,9 +35,7 @@ public class RatingServiceImpl implements RatingService {
     @Override
     public Rating update(long id, Rating rating) {
         return repository.findById(id)
-                .map(updatedRating -> {
-                    return updatedRating;
-                })
+                .map(existing -> repository.save(existing.merge(rating)))
                 .orElseThrow(() -> new ResourceNotFoundException(Rating.class, id));
     }
 

@@ -39,14 +39,7 @@ public class CompanyGeneralInfoServiceImpl implements CompanyGeneralInfoService 
     @Transactional
     public CompanyGeneralInfo update(long id, CompanyGeneralInfo companyGeneralInfo) {
         return repository.findById(id)
-                .map(updatedCompanyGeneralInfo -> {
-                    updatedCompanyGeneralInfo.setCeo(companyGeneralInfo.getCeo());
-                    updatedCompanyGeneralInfo.setCompany(companyGeneralInfo.getCompany());
-                    updatedCompanyGeneralInfo.setDebutDate(companyGeneralInfo.getDebutDate());
-                    updatedCompanyGeneralInfo.setLocation(companyGeneralInfo.getLocation());
-                    updatedCompanyGeneralInfo.setSharesNumber(companyGeneralInfo.getSharesNumber());
-                    return updatedCompanyGeneralInfo;
-                })
+                .map(existing -> repository.save(existing.merge(companyGeneralInfo)))
                 .orElseThrow(() -> new ResourceNotFoundException(CompanyGeneralInfo.class, id));
     }
 

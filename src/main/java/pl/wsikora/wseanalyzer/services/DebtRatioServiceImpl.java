@@ -35,9 +35,7 @@ public class DebtRatioServiceImpl implements DebtRatioService {
     @Override
     public DebtRatio update(long id, DebtRatio debtRatio) {
         return repository.findById(id)
-                .map(updatedDebtRatio -> {
-                    return updatedDebtRatio;
-                })
+                .map(existing -> repository.save(existing.merge(debtRatio)))
                 .orElseThrow(() -> new ResourceNotFoundException(DebtRatio.class, id));
     }
 

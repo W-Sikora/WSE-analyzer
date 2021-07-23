@@ -35,9 +35,7 @@ public class MarketValueRatioServiceImpl implements MarketValueRatioService {
     @Override
     public MarketValueRatio update(long id, MarketValueRatio marketValueRatio) {
         return repository.findById(id)
-                .map(updatedMarketValueRatio -> {
-                    return updatedMarketValueRatio;
-                })
+                .map(existing -> repository.save(existing.merge(marketValueRatio)))
                 .orElseThrow(() -> new ResourceNotFoundException(MarketValueRatio.class, id));
     }
 

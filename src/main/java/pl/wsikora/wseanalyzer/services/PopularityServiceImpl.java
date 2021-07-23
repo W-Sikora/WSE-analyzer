@@ -36,9 +36,7 @@ public class PopularityServiceImpl implements PopularityService {
     @Override
     public Popularity update(long id, Popularity popularity) {
         return repository.findById(id)
-                .map(updatedPopularity -> {
-                    return updatedPopularity;
-                })
+                .map(existing -> repository.save(existing.merge(popularity)))
                 .orElseThrow(() -> new ResourceNotFoundException(Popularity.class, id));
     }
 

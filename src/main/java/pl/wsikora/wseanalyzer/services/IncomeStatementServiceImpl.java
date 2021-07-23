@@ -35,9 +35,7 @@ public class IncomeStatementServiceImpl implements IncomeStatementService {
     @Override
     public IncomeStatement update(long id, IncomeStatement incomeStatement) {
         return repository.findById(id)
-                .map(updatedIncomeStatement -> {
-                    return updatedIncomeStatement;
-                })
+                .map(existing -> repository.save(existing.merge(incomeStatement)))
                 .orElseThrow(() -> new ResourceNotFoundException(IncomeStatement.class, id));
     }
 

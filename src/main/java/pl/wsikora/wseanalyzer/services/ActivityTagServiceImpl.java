@@ -36,12 +36,9 @@ public class ActivityTagServiceImpl implements ActivityTagService {
     }
 
     @Override
-    @Transactional
     public ActivityTag update(long id, ActivityTag activityTag) {
         return repository.findById(id)
-                .map(updatedActivityTag -> {
-                    return updatedActivityTag;
-                })
+                .map(existing -> repository.save(existing.merge(activityTag)))
                 .orElseThrow(() -> new ResourceNotFoundException(ActivityTag.class, id));
     }
 

@@ -36,9 +36,7 @@ public class ProfitabilityRatioServiceImpl implements ProfitabilityRatioService 
     @Override
     public ProfitabilityRatio update(long id, ProfitabilityRatio profitabilityRatio) {
         return repository.findById(id)
-                .map(updatedProfitabilityRatio -> {
-                    return updatedProfitabilityRatio;
-                })
+                .map(existing -> repository.save(existing.merge(profitabilityRatio)))
                 .orElseThrow(() -> new ResourceNotFoundException(ProfitabilityRatio.class, id));
     }
 

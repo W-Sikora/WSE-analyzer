@@ -37,9 +37,7 @@ public class ShareholdingServiceImpl implements ShareholdingService {
     @Override
     public Shareholding update(long id, Shareholding shareholding) {
         return repository.findById(id)
-                .map(updatedShareholding -> {
-                    return updatedShareholding;
-                })
+                .map(existing -> repository.save(existing.merge(shareholding)))
                 .orElseThrow(() -> new ResourceNotFoundException(Shareholding.class, id));
     }
 

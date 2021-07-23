@@ -36,9 +36,7 @@ public class DividendRatioServiceImpl implements DividendRatioService {
     @Override
     public DividendRatio update(long id, DividendRatio dividendRatio) {
         return repository.findById(id)
-                .map(updatedDividendRatio -> {
-                    return updatedDividendRatio;
-                })
+                .map(existing -> repository.save(existing.merge(dividendRatio)))
                 .orElseThrow(() -> new ResourceNotFoundException(DividendRatio.class, id));
     }
 

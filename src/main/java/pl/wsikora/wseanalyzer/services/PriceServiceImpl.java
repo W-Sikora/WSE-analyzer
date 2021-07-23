@@ -35,9 +35,7 @@ public class PriceServiceImpl implements PriceService {
     @Override
     public Price update(long id, Price price) {
         return repository.findById(id)
-                .map(updatedPrice -> {
-                    return updatedPrice;
-                })
+                .map(existing -> repository.save(existing.merge(price)))
                 .orElseThrow(() -> new ResourceNotFoundException(Price.class, id));
     }
 

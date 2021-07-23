@@ -35,9 +35,7 @@ public class CashFlowStatementServiceImpl implements CashFlowStatementService {
     @Override
     public CashFlowStatement update(long id, CashFlowStatement cashFlowStatement) {
         return repository.findById(id)
-                .map(updatedCashFlowStatement -> {
-                    return updatedCashFlowStatement;
-                })
+                .map(existing -> repository.save(existing.merge(cashFlowStatement)))
                 .orElseThrow(() -> new ResourceNotFoundException(CashFlowStatement.class, id));
     }
 

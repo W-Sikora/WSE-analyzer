@@ -36,9 +36,7 @@ public class LiquidityRatioServiceImpl implements LiquidityRatioService {
     @Override
     public LiquidityRatio update(long id, LiquidityRatio liquidityRatio) {
         return repository.findById(id)
-                .map(updatedLiquidityRatio -> {
-                    return updatedLiquidityRatio;
-                })
+                .map(existing -> repository.save(existing.merge(liquidityRatio)))
                 .orElseThrow(() -> new ResourceNotFoundException(LiquidityRatio.class, id));
     }
 

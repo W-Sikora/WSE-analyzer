@@ -35,9 +35,7 @@ public class ShareholderServiceImpl  implements ShareholderService {
     @Override
     public Shareholder update(long id, Shareholder shareholder) {
         return repository.findById(id)
-                .map(updatedShareholder -> {
-                    return updatedShareholder;
-                })
+                .map(existing -> repository.save(existing.merge(shareholder)))
                 .orElseThrow(() -> new ResourceNotFoundException(Shareholder.class, id));
     }
 
