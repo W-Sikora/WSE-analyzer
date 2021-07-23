@@ -10,7 +10,7 @@ import pl.wsikora.wseanalyzer.services.ActivityTagService;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping(value = "/api/v1/activity_tags")
 public class ActivityTagController implements REST<ActivityTag> {
 
     private final ActivityTagService service;
