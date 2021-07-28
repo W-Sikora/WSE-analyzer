@@ -33,7 +33,7 @@ public class PopularityController implements REST<Popularity> {
     @Override
     public ResponseEntity<Popularity> create(Popularity popularity) {
         Popularity newPopularity = service.create(popularity);
-        return ResponseEntity.created(makeNewUri(newPopularity.getId()))
+        return ResponseEntity.created(makeNewUri(newPopularity))
                 .body(newPopularity);
     }
 

@@ -31,7 +31,7 @@ public class BalanceSheetController implements REST<BalanceSheet> {
     @Override
     public ResponseEntity<BalanceSheet> create(BalanceSheet balanceSheet) {
         BalanceSheet newBalanceSheet = service.create(balanceSheet);
-        return ResponseEntity.created(makeNewUri(newBalanceSheet.getId()))
+        return ResponseEntity.created(makeNewUri(newBalanceSheet))
                 .body(newBalanceSheet);
     }
 

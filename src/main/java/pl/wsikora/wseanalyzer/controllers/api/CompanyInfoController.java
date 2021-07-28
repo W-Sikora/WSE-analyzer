@@ -32,7 +32,7 @@ public class CompanyInfoController implements REST<CompanyInfo> {
     @Override
     public ResponseEntity<CompanyInfo> create(CompanyInfo companyInfo) {
         CompanyInfo newCompanyInfo = service.create(companyInfo);
-        return ResponseEntity.created(makeNewUri(newCompanyInfo.getId()))
+        return ResponseEntity.created(makeNewUri(newCompanyInfo))
                 .body(newCompanyInfo);
     }
 

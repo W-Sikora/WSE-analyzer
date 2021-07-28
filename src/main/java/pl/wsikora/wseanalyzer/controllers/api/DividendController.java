@@ -32,7 +32,7 @@ public class DividendController implements REST<Dividend> {
     @Override
     public ResponseEntity<Dividend> create(Dividend dividend) {
         Dividend newDividend = service.create(dividend);
-        return ResponseEntity.created(makeNewUri(newDividend.getId()))
+        return ResponseEntity.created(makeNewUri(newDividend))
                 .body(newDividend);
     }
 

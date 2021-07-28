@@ -32,7 +32,7 @@ public class CashFlowStatementController implements REST<CashFlowStatement> {
     @Override
     public ResponseEntity<CashFlowStatement> create(CashFlowStatement cashFlowStatement) {
         CashFlowStatement newCashFlowStatement = service.create(cashFlowStatement);
-        return ResponseEntity.created(makeNewUri(newCashFlowStatement.getId()))
+        return ResponseEntity.created(makeNewUri(newCashFlowStatement))
                 .body(newCashFlowStatement);
     }
 

@@ -32,7 +32,7 @@ public class DebtRatioController implements REST<DebtRatio> {
     @Override
     public ResponseEntity<DebtRatio> create(DebtRatio debtRatio) {
         DebtRatio newDebtRatio = service.create(debtRatio);
-        return ResponseEntity.created(makeNewUri(newDebtRatio.getId()))
+        return ResponseEntity.created(makeNewUri(newDebtRatio))
                 .body(newDebtRatio);
     }
 

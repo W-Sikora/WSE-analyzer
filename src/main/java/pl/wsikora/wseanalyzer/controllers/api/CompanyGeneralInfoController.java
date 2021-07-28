@@ -31,7 +31,7 @@ public class CompanyGeneralInfoController implements REST<CompanyGeneralInfo> {
     @Override
     public ResponseEntity<CompanyGeneralInfo> create(CompanyGeneralInfo companyGeneralInfo) {
         CompanyGeneralInfo newCompanyGeneralInfo = service.create(companyGeneralInfo);
-        return ResponseEntity.created(makeNewUri(newCompanyGeneralInfo.getId()))
+        return ResponseEntity.created(makeNewUri(newCompanyGeneralInfo))
                 .body(newCompanyGeneralInfo);
     }
 

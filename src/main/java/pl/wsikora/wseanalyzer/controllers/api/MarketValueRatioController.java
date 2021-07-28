@@ -32,7 +32,7 @@ public class MarketValueRatioController implements REST<MarketValueRatio> {
     @Override
     public ResponseEntity<MarketValueRatio> create(MarketValueRatio marketValueRatio) {
         MarketValueRatio newMarketValueRatio = service.create(marketValueRatio);
-        return ResponseEntity.created(makeNewUri(marketValueRatio.getId()))
+        return ResponseEntity.created(makeNewUri(marketValueRatio))
                 .body(newMarketValueRatio);
     }
 

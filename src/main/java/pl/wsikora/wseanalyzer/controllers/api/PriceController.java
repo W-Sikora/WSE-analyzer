@@ -31,7 +31,7 @@ public class PriceController implements REST<Price> {
     @Override
     public ResponseEntity<Price> create(Price price) {
         Price newPrice = service.create(price);
-        return ResponseEntity.created(makeNewUri(newPrice.getId()))
+        return ResponseEntity.created(makeNewUri(newPrice))
                 .body(newPrice);
     }
 

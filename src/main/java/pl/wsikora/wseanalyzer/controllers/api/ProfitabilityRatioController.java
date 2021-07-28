@@ -32,7 +32,7 @@ public class ProfitabilityRatioController implements REST<ProfitabilityRatio> {
     @Override
     public ResponseEntity<ProfitabilityRatio> create(ProfitabilityRatio profitabilityRatio) {
         ProfitabilityRatio newProfitabilityRatio = service.create(profitabilityRatio);
-        return ResponseEntity.created(makeNewUri(newProfitabilityRatio.getId()))
+        return ResponseEntity.created(makeNewUri(newProfitabilityRatio))
                 .body(newProfitabilityRatio);
     }
 

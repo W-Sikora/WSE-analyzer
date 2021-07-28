@@ -32,7 +32,7 @@ public class RatingController implements REST<Rating> {
     @Override
     public ResponseEntity<Rating> create(Rating rating) {
         Rating newRating = service.create(rating);
-        return ResponseEntity.created(makeNewUri(newRating.getId()))
+        return ResponseEntity.created(makeNewUri(newRating))
                 .body(newRating);
     }
 

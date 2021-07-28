@@ -32,7 +32,7 @@ public class IncomeStatementController implements REST<IncomeStatement> {
     @Override
     public ResponseEntity<IncomeStatement> create(IncomeStatement incomeStatement) {
         IncomeStatement newIncomeStatement = service.create(incomeStatement);
-        return ResponseEntity.created(makeNewUri(newIncomeStatement.getId()))
+        return ResponseEntity.created(makeNewUri(newIncomeStatement))
                 .body(newIncomeStatement);
     }
 

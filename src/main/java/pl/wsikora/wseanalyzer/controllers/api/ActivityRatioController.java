@@ -32,7 +32,7 @@ public class ActivityRatioController implements REST<ActivityRatio> {
     @Override
     public ResponseEntity<ActivityRatio> create(ActivityRatio activityRatio) {
         ActivityRatio createdActivityRatio = service.create(activityRatio);
-        return ResponseEntity.created(makeNewUri(createdActivityRatio.getId()))
+        return ResponseEntity.created(makeNewUri(createdActivityRatio))
                 .body(createdActivityRatio);
     }
 

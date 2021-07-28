@@ -32,7 +32,7 @@ public class ShareholdingController implements REST<Shareholding> {
     @Override
     public ResponseEntity<Shareholding> create(Shareholding shareholding) {
         Shareholding newShareholding = service.create(shareholding);
-        return ResponseEntity.created(makeNewUri(newShareholding.getId()))
+        return ResponseEntity.created(makeNewUri(newShareholding))
                 .body(newShareholding);
     }
 

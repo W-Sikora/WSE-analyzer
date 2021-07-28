@@ -32,7 +32,7 @@ public class UserController implements REST<User> {
     @Override
     public ResponseEntity<User> create(User user) {
         User newUser = service.create(user);
-        return ResponseEntity.created(makeNewUri(newUser.getId()))
+        return ResponseEntity.created(makeNewUri(newUser))
                 .body(newUser);
     }
 

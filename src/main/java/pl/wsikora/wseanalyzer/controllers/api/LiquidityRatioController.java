@@ -32,7 +32,7 @@ public class LiquidityRatioController implements REST<LiquidityRatio> {
     @Override
     public ResponseEntity<LiquidityRatio> create(LiquidityRatio liquidityRatio) {
         LiquidityRatio newLiquidityRatio = service.create(liquidityRatio);
-        return ResponseEntity.created(makeNewUri(newLiquidityRatio.getId()))
+        return ResponseEntity.created(makeNewUri(newLiquidityRatio))
                 .body(newLiquidityRatio);
     }
 

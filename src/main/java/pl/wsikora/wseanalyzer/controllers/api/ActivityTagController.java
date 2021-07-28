@@ -32,7 +32,7 @@ public class ActivityTagController implements REST<ActivityTag> {
     @Override
     public ResponseEntity<ActivityTag> create(ActivityTag activityTag) {
         ActivityTag newActivityTag = service.create(activityTag);
-        return ResponseEntity.created(makeNewUri(newActivityTag.getId()))
+        return ResponseEntity.created(makeNewUri(newActivityTag))
                 .body(newActivityTag);
     }
 
