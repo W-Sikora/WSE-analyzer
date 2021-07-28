@@ -11,12 +11,11 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 import static javax.persistence.GenerationType.IDENTITY;
-import static pl.wsikora.wseanalyzer.util.Utils.valueChanged;
 
 @Entity
 @Table(name = "users")
 @JsonDeserialize(builder = User.Builder.class)
-public class User {
+public class User implements ModelEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -82,13 +81,14 @@ public class User {
     public User merge(User user) {
         return User.builder()
                 .withId(this.id)
-                .withNickname(valueChanged(this.nickname, user.nickname))
-                .withEmail(valueChanged(this.email, user.email))
-                .withPassword(valueChanged(this.password, user.password))
-                .withCompaniesFollowed(valueChanged(this.companiesFollowed, user.companiesFollowed))
+                .withNickname(returnNewValueIfChanged(this.nickname, user.nickname))
+                .withEmail(returnNewValueIfChanged(this.email, user.email))
+                .withPassword(returnNewValueIfChanged(this.password, user.password))
+                .withCompaniesFollowed(returnNewValueIfChanged(this.companiesFollowed, user.companiesFollowed))
                 .build();
     }
 
+    @Override
     public Long getId() {
         return id;
     }

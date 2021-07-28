@@ -11,12 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static pl.wsikora.wseanalyzer.util.Utils.valueChanged;
 
 @Entity
 @Table(name = "balance_sheets")
 @JsonDeserialize(builder = BalanceSheet.Builder.class)
-public class BalanceSheet extends Statement {
+public class BalanceSheet extends Statement implements ModelEntity {
 
     @Column(name = "fixed_asset")
     private Long fixedAsset;
@@ -139,18 +138,18 @@ public class BalanceSheet extends Statement {
     public BalanceSheet merge(BalanceSheet balanceSheet) {
         return BalanceSheet.builder()
                 .withId(this.id)
-                .withCompany(valueChanged(this.company, balanceSheet.company))
-                .withDate(valueChanged(this.date, balanceSheet.date))
-                .withFixedAsset(valueChanged(this.fixedAsset, balanceSheet.fixedAsset))
-                .withCurrentAsset(valueChanged(this.currentAsset, balanceSheet.currentAsset))
-                .withTotalAssets(valueChanged(this.totalAssets, balanceSheet.totalAssets))
-                .withCurrentReceivables(valueChanged(this.currentReceivables, balanceSheet.currentReceivables))
-                .withCurrentInvestments(valueChanged(this.currentInvestments, balanceSheet.currentInvestments))
-                .withCashAndEquivalents(valueChanged(this.cashAndEquivalents, balanceSheet.cashAndEquivalents))
-                .withShareholdersEquity(valueChanged(this.shareholdersEquity, balanceSheet.shareholdersEquity))
-                .withLongTermLiabilities(valueChanged(this.longTermLiabilities, balanceSheet.longTermLiabilities))
-                .withCurrentLiabilities(valueChanged(this.currentLiabilities, balanceSheet.currentLiabilities))
-                .withTotalLiabilitiesAndEquity(valueChanged(this.totalLiabilitiesAndEquity, balanceSheet.totalLiabilitiesAndEquity))
+                .withCompany(returnNewValueIfChanged(this.company, balanceSheet.company))
+                .withDate(returnNewValueIfChanged(this.date, balanceSheet.date))
+                .withFixedAsset(returnNewValueIfChanged(this.fixedAsset, balanceSheet.fixedAsset))
+                .withCurrentAsset(returnNewValueIfChanged(this.currentAsset, balanceSheet.currentAsset))
+                .withTotalAssets(returnNewValueIfChanged(this.totalAssets, balanceSheet.totalAssets))
+                .withCurrentReceivables(returnNewValueIfChanged(this.currentReceivables, balanceSheet.currentReceivables))
+                .withCurrentInvestments(returnNewValueIfChanged(this.currentInvestments, balanceSheet.currentInvestments))
+                .withCashAndEquivalents(returnNewValueIfChanged(this.cashAndEquivalents, balanceSheet.cashAndEquivalents))
+                .withShareholdersEquity(returnNewValueIfChanged(this.shareholdersEquity, balanceSheet.shareholdersEquity))
+                .withLongTermLiabilities(returnNewValueIfChanged(this.longTermLiabilities, balanceSheet.longTermLiabilities))
+                .withCurrentLiabilities(returnNewValueIfChanged(this.currentLiabilities, balanceSheet.currentLiabilities))
+                .withTotalLiabilitiesAndEquity(returnNewValueIfChanged(this.totalLiabilitiesAndEquity, balanceSheet.totalLiabilitiesAndEquity))
                 .build();
     }
 

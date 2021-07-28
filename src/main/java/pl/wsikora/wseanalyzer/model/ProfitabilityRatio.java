@@ -11,12 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static pl.wsikora.wseanalyzer.util.Utils.valueChanged;
-
 @Entity
 @Table(name = "profitability_ratios")
 @JsonDeserialize(builder = ProfitabilityRatio.Builder.class)
-public class ProfitabilityRatio extends Ratio {
+public class ProfitabilityRatio extends Ratio implements ModelEntity {
 
     public ProfitabilityRatio() {
     }
@@ -74,11 +72,11 @@ public class ProfitabilityRatio extends Ratio {
     public ProfitabilityRatio merge(ProfitabilityRatio profitabilityRatio) {
         return ProfitabilityRatio.builder()
                 .withId(this.id)
-                .withCompany(valueChanged(this.company, profitabilityRatio.company))
-                .withDate(valueChanged(this.date, profitabilityRatio.date))
-                .withName(valueChanged(this.name, profitabilityRatio.name))
-                .withShortcut(valueChanged(this.shortcut, profitabilityRatio.shortcut))
-                .withValue(valueChanged(this.value, profitabilityRatio.value))
+                .withCompany(returnNewValueIfChanged(this.company, profitabilityRatio.company))
+                .withDate(returnNewValueIfChanged(this.date, profitabilityRatio.date))
+                .withName(returnNewValueIfChanged(this.name, profitabilityRatio.name))
+                .withShortcut(returnNewValueIfChanged(this.shortcut, profitabilityRatio.shortcut))
+                .withValue(returnNewValueIfChanged(this.value, profitabilityRatio.value))
                 .build();
     }
 

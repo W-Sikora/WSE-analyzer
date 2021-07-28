@@ -5,7 +5,7 @@ import pl.wsikora.wseanalyzer.model.BalanceSheet;
 
 import static pl.wsikora.wseanalyzer.util.collector.CollectorValues.*;
 
-public class BalanceSheetCollector extends StatementCollector {
+public class BalanceSheetCollector extends StatementCollector <BalanceSheet> {
     private final Company company;
 
     public BalanceSheetCollector(Company company) {
@@ -15,6 +15,8 @@ public class BalanceSheetCollector extends StatementCollector {
 
     @Override
     public BalanceSheet form(int index) {
+
+
         BalanceSheet balanceSheet = new BalanceSheet();
 //        balanceSheet.setCompany(company);
 //        setDate(index, balanceSheet::setDate);

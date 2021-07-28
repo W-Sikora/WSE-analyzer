@@ -10,12 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static pl.wsikora.wseanalyzer.util.Utils.valueChanged;
 
 @Entity
 @Table(name = "income_statements")
 @JsonDeserialize(builder = IncomeStatement.Builder.class)
-public class IncomeStatement extends Statement {
+public class IncomeStatement extends Statement implements ModelEntity {
 
     private Long revenue;
 
@@ -119,16 +118,16 @@ public class IncomeStatement extends Statement {
     public IncomeStatement merge(IncomeStatement incomeStatement) {
         return IncomeStatement.builder()
                 .withId(this.id)
-                .withCompany(valueChanged(this.company, incomeStatement.company))
-                .withDate(valueChanged(this.date, incomeStatement.date))
-                .withRevenue(valueChanged(this.revenue, incomeStatement.revenue))
-                .withGoodsSoldCosts(valueChanged(this.goodsSoldCosts, incomeStatement.goodsSoldCosts))
-                .withSellingCosts(valueChanged(this.sellingCosts, incomeStatement.sellingCosts))
-                .withAdministrativeCosts(valueChanged(this.administrativeCosts, incomeStatement.administrativeCosts))
-                .withProfit(valueChanged(this.profit, incomeStatement.profit))
-                .withOperatingIncome(valueChanged(this.operatingIncome, incomeStatement.operatingIncome))
-                .withIncomeBeforeTaxes(valueChanged(this.incomeBeforeTaxes, incomeStatement.incomeBeforeTaxes))
-                .withNetIncome(valueChanged(this.netIncome, incomeStatement.netIncome))
+                .withCompany(returnNewValueIfChanged(this.company, incomeStatement.company))
+                .withDate(returnNewValueIfChanged(this.date, incomeStatement.date))
+                .withRevenue(returnNewValueIfChanged(this.revenue, incomeStatement.revenue))
+                .withGoodsSoldCosts(returnNewValueIfChanged(this.goodsSoldCosts, incomeStatement.goodsSoldCosts))
+                .withSellingCosts(returnNewValueIfChanged(this.sellingCosts, incomeStatement.sellingCosts))
+                .withAdministrativeCosts(returnNewValueIfChanged(this.administrativeCosts, incomeStatement.administrativeCosts))
+                .withProfit(returnNewValueIfChanged(this.profit, incomeStatement.profit))
+                .withOperatingIncome(returnNewValueIfChanged(this.operatingIncome, incomeStatement.operatingIncome))
+                .withIncomeBeforeTaxes(returnNewValueIfChanged(this.incomeBeforeTaxes, incomeStatement.incomeBeforeTaxes))
+                .withNetIncome(returnNewValueIfChanged(this.netIncome, incomeStatement.netIncome))
                 .build();
     }
 

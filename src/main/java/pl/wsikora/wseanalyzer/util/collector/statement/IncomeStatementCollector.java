@@ -17,16 +17,16 @@ public class IncomeStatementCollector extends StatementCollector {
     @Override
     public IncomeStatement form(int index) {
         IncomeStatement statement = new IncomeStatement();
-        statement.setCompany(company);
-        setDate(index, statement::setDate);
-        setSingleValue("IncomeRevenues", index, statement::setRevenue);
-        setSingleValue("IncomeCostOfSales", index, statement::setGoodsSoldCosts);
-        setSingleValue("IncomeDistributionExpenses", index, statement::setSellingCosts);
-        setSingleValue("IncomeAdministrativExpenses", index, statement::setAdministrativeCosts);
-        setSingleValue("IncomeGrossProfit", index, statement::setProfit);
-        setSingleValue("IncomeEBIT", index, statement::setOperatingIncome);
-        setSingleValue("IncomeBeforeTaxProfit", index, statement::setIncomeBeforeTaxes);
-        setSingleValue("IncomeNetProfit", index, statement::setNetIncome);
+//        statement.setCompany(company);
+//        setDate(index, statement::setDate);
+//        setSingleValue("IncomeRevenues", index, statement::setRevenue);
+//        setSingleValue("IncomeCostOfSales", index, statement::setGoodsSoldCosts);
+//        setSingleValue("IncomeDistributionExpenses", index, statement::setSellingCosts);
+//        setSingleValue("IncomeAdministrativExpenses", index, statement::setAdministrativeCosts);
+//        setSingleValue("IncomeGrossProfit", index, statement::setProfit);
+//        setSingleValue("IncomeEBIT", index, statement::setOperatingIncome);
+//        setSingleValue("IncomeBeforeTaxProfit", index, statement::setIncomeBeforeTaxes);
+//        setSingleValue("IncomeNetProfit", index, statement::setNetIncome);
         return statement;
     }
 

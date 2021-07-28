@@ -10,12 +10,11 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 import static javax.persistence.GenerationType.IDENTITY;
-import static pl.wsikora.wseanalyzer.util.Utils.valueChanged;
 
 @Entity
 @Table(name = "activity_tags")
 @JsonDeserialize(builder = ActivityTag.Builder.class)
-public class ActivityTag {
+public class ActivityTag implements ModelEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -59,10 +58,11 @@ public class ActivityTag {
     public ActivityTag merge(ActivityTag activityTag) {
         return ActivityTag.builder()
                 .withId(this.id)
-                .withTagName(valueChanged(this.tagName, activityTag.tagName))
+                .withTagName(returnNewValueIfChanged(this.tagName, activityTag.tagName))
                 .build();
     }
 
+    @Override
     public Long getId() {
         return id;
     }

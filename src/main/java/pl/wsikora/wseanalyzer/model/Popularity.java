@@ -11,12 +11,11 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 import static javax.persistence.GenerationType.IDENTITY;
-import static pl.wsikora.wseanalyzer.util.Utils.valueChanged;
 
 @Entity
 @Table(name = "popularities")
 @JsonDeserialize(builder = Popularity.Builder.class)
-public class Popularity {
+public class Popularity implements ModelEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -85,10 +84,10 @@ public class Popularity {
     public Popularity merge(Popularity popularity) {
         return Popularity.builder()
                 .withId(this.id)
-                .withCompany(valueChanged(this.company, popularity.company))
-                .withDate(valueChanged(this.date, popularity.date))
-                .withBankerRankingPosition(valueChanged(this.bankerRankingPosition, popularity.bankerRankingPosition))
-                .withBusinessRadarRankingPosition(valueChanged(this.businessRadarRankingPosition, popularity.businessRadarRankingPosition))
+                .withCompany(returnNewValueIfChanged(this.company, popularity.company))
+                .withDate(returnNewValueIfChanged(this.date, popularity.date))
+                .withBankerRankingPosition(returnNewValueIfChanged(this.bankerRankingPosition, popularity.bankerRankingPosition))
+                .withBusinessRadarRankingPosition(returnNewValueIfChanged(this.businessRadarRankingPosition, popularity.businessRadarRankingPosition))
                 .build();
     }
 

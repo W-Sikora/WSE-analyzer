@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import javax.persistence.*;
-import java.io.BufferedInputStream;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,12 +12,11 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 import static javax.persistence.GenerationType.IDENTITY;
-import static pl.wsikora.wseanalyzer.util.Utils.valueChanged;
 
 @Entity
 @Table(name = "prices")
 @JsonDeserialize(builder = Price.Builder.class)
-public class Price {
+public class Price implements ModelEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -121,18 +119,19 @@ public class Price {
     public Price merge(Price price) {
         return Price.builder()
                 .withId(this.id)
-                .withCompany(valueChanged(this.company, price.company))
-                .withDatetime(valueChanged(this.datetime, price.datetime))
-                .withLast(valueChanged(this.last, price.last))
-                .withHigh(valueChanged(this.high, price.high))
-                .withLow(valueChanged(this.low, price.low))
-                .withOpen(valueChanged(this.open, price.open))
-                .withPrevious(valueChanged(this.previous, price.previous))
-                .withVolume(valueChanged(this.volume, price.volume))
-                .withTradesNumber(valueChanged(this.tradesNumber, price.tradesNumber))
+                .withCompany(returnNewValueIfChanged(this.company, price.company))
+                .withDatetime(returnNewValueIfChanged(this.datetime, price.datetime))
+                .withLast(returnNewValueIfChanged(this.last, price.last))
+                .withHigh(returnNewValueIfChanged(this.high, price.high))
+                .withLow(returnNewValueIfChanged(this.low, price.low))
+                .withOpen(returnNewValueIfChanged(this.open, price.open))
+                .withPrevious(returnNewValueIfChanged(this.previous, price.previous))
+                .withVolume(returnNewValueIfChanged(this.volume, price.volume))
+                .withTradesNumber(returnNewValueIfChanged(this.tradesNumber, price.tradesNumber))
                 .build();
     }
 
+    @Override
     public Long getId() {
         return id;
     }

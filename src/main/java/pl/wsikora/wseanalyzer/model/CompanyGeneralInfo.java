@@ -12,12 +12,11 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 import static javax.persistence.GenerationType.IDENTITY;
-import static pl.wsikora.wseanalyzer.util.Utils.valueChanged;
 
 @Entity
 @Table(name = "companies_general_info")
 @JsonDeserialize(builder = CompanyGeneralInfo.Builder.class)
-public class CompanyGeneralInfo {
+public class CompanyGeneralInfo implements ModelEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -101,15 +100,16 @@ public class CompanyGeneralInfo {
     public CompanyGeneralInfo merge(CompanyGeneralInfo companyGeneralInfo) {
         return CompanyGeneralInfo.builder()
                 .withId(this.id)
-                .withCompany(valueChanged(this.company, companyGeneralInfo.company))
-                .withDebutDate(valueChanged(this.debutDate, companyGeneralInfo.debutDate))
-                .withSharesNumber(valueChanged(this.sharesNumber, companyGeneralInfo.sharesNumber))
-                .withLocation(valueChanged(this.location, companyGeneralInfo.location))
-                .withCeo(valueChanged(this.ceo, companyGeneralInfo.ceo))
-                .withEmployeesNumber(valueChanged(this.employeesNumber, companyGeneralInfo.employeesNumber))
+                .withCompany(returnNewValueIfChanged(this.company, companyGeneralInfo.company))
+                .withDebutDate(returnNewValueIfChanged(this.debutDate, companyGeneralInfo.debutDate))
+                .withSharesNumber(returnNewValueIfChanged(this.sharesNumber, companyGeneralInfo.sharesNumber))
+                .withLocation(returnNewValueIfChanged(this.location, companyGeneralInfo.location))
+                .withCeo(returnNewValueIfChanged(this.ceo, companyGeneralInfo.ceo))
+                .withEmployeesNumber(returnNewValueIfChanged(this.employeesNumber, companyGeneralInfo.employeesNumber))
                 .build();
     }
 
+    @Override
     public Long getId() {
         return id;
     }

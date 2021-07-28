@@ -13,12 +13,11 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 import static javax.persistence.GenerationType.IDENTITY;
-import static pl.wsikora.wseanalyzer.util.Utils.valueChanged;
 
 @Entity
 @Table(name = "dividends")
 @JsonDeserialize(builder = Dividend.Builder.class)
-public class Dividend {
+public class Dividend implements ModelEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -104,15 +103,16 @@ public class Dividend {
     public Dividend merge(Dividend dividend) {
         return Dividend.builder()
                 .withId(this.id)
-                .withCompany(valueChanged(this.company, dividend.company))
-                .withDividendPerShare(valueChanged(this.dividendPerShare, dividend.dividendPerShare))
-                .withDividendValue(valueChanged(this.dividendValue, dividend.dividendValue))
-                .withSupplementaryCapitalContribution(valueChanged(this.supplementaryCapitalContribution, dividend.supplementaryCapitalContribution))
-                .withExDate(valueChanged(this.exDate, dividend.exDate))
-                .withPaymentDate(valueChanged(this.paymentDate, dividend.paymentDate))
+                .withCompany(returnNewValueIfChanged(this.company, dividend.company))
+                .withDividendPerShare(returnNewValueIfChanged(this.dividendPerShare, dividend.dividendPerShare))
+                .withDividendValue(returnNewValueIfChanged(this.dividendValue, dividend.dividendValue))
+                .withSupplementaryCapitalContribution(returnNewValueIfChanged(this.supplementaryCapitalContribution, dividend.supplementaryCapitalContribution))
+                .withExDate(returnNewValueIfChanged(this.exDate, dividend.exDate))
+                .withPaymentDate(returnNewValueIfChanged(this.paymentDate, dividend.paymentDate))
                 .build();
     }
-    
+
+    @Override
     public Long getId() {
         return id;
     }

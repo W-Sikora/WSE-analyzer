@@ -11,12 +11,11 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 import static javax.persistence.GenerationType.IDENTITY;
-import static pl.wsikora.wseanalyzer.util.Utils.valueChanged;
 
 @Entity
 @Table(name = "companies_info")
 @JsonDeserialize(builder = CompanyInfo.Builder.class)
-public class CompanyInfo {
+public class CompanyInfo implements ModelEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -86,13 +85,14 @@ public class CompanyInfo {
     public CompanyInfo merge(CompanyInfo companyInfo) {
         return CompanyInfo.builder()
                 .withId(this.id)
-                .withCompany(valueChanged(this.company, companyInfo.company))
-                .withStockExchange(valueChanged(this.stockExchange, companyInfo.stockExchange))
-                .withIndustry(valueChanged(this.industry, companyInfo.industry))
-                .withActivityTags(valueChanged(this.activityTags, companyInfo.activityTags))
+                .withCompany(returnNewValueIfChanged(this.company, companyInfo.company))
+                .withStockExchange(returnNewValueIfChanged(this.stockExchange, companyInfo.stockExchange))
+                .withIndustry(returnNewValueIfChanged(this.industry, companyInfo.industry))
+                .withActivityTags(returnNewValueIfChanged(this.activityTags, companyInfo.activityTags))
                 .build();
     }
 
+    @Override
     public Long getId() {
         return id;
     }

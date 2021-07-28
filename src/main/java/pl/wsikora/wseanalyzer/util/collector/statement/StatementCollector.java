@@ -14,7 +14,7 @@ import java.util.function.Function;
 import static pl.wsikora.wseanalyzer.util.collector.CollectorValues.*;
 import static pl.wsikora.wseanalyzer.util.date.DateParser.parseStatementDate;
 
-public abstract class StatementCollector {
+public abstract class StatementCollector <T> {
     private final Elements table;
     private final int columnsNumber;
 
@@ -23,28 +23,26 @@ public abstract class StatementCollector {
         this.columnsNumber = table.select(TABLE_DATE_CSS_QUERY).size();
     }
 
-    public  <T> T get(int index) {
+
+
+    public T get(int index) {
         return form(index);
     }
 
-    public <T> T getLatest() {
-        return form(size() - 1);
+    public T getLatest() {
+        return form(columnsNumber - 1);
     }
 
-    public <T> List<T> getPart(int elementsNumber) {
+    public List<T> getPart(int elementsNumber) {
         List<T> result = new ArrayList<>();
-        int end = size();
+        int end = columnsNumber;
         for (int i = Math.max(end - elementsNumber, 0); i < end; i++) {
             result.add(form(i));
         }
         return result;
     }
 
-    public abstract <T> T form(int index);
-
-    protected int size() {
-        return columnsNumber;
-    }
+    public abstract T form(int index);
 
     protected Optional<LocalDate> extractDate(int index) {
         return extractSingle(getTableDate(), index, e -> parseStatementDate(e.text().split("\\(")[1]));

@@ -3,6 +3,7 @@ package pl.wsikora.wseanalyzer.util;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -24,15 +25,6 @@ public class Utils {
         } catch (InterruptedException interruptedException) {
             interruptedException.printStackTrace();
         }
-    }
-
-
-    public static URI makeNewUri(long id) {
-        return ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(id)
-                .toUri();
     }
 
 }

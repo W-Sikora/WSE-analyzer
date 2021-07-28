@@ -12,12 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static pl.wsikora.wseanalyzer.util.Utils.valueChanged;
-
 @Entity
 @Table(name = "cash_flow_statements")
 @JsonDeserialize(builder = CashFlowStatement.Builder.class)
-public class CashFlowStatement extends Statement {
+public class CashFlowStatement extends Statement implements ModelEntity {
 
     @Column(name = "operating_activities")
     private Long operatingActivities;
@@ -92,12 +90,12 @@ public class CashFlowStatement extends Statement {
     public CashFlowStatement merge(CashFlowStatement cashFlowStatement) {
         return CashFlowStatement.builder()
                 .withId(this.id)
-                .withCompany(valueChanged(this.company, cashFlowStatement.company))
-                .withDate(valueChanged(this.date, cashFlowStatement.date))
-                .withOperatingActivities(valueChanged(this.operatingActivities, cashFlowStatement.operatingActivities))
-                .withInvestingActivities(valueChanged(this.investingActivities, cashFlowStatement.investingActivities))
-                .withFinancingActivities(valueChanged(this.financingActivities, cashFlowStatement.financingActivities))
-                .withTotalCashFlow(valueChanged(this.totalCashFlow, cashFlowStatement.totalCashFlow))
+                .withCompany(returnNewValueIfChanged(this.company, cashFlowStatement.company))
+                .withDate(returnNewValueIfChanged(this.date, cashFlowStatement.date))
+                .withOperatingActivities(returnNewValueIfChanged(this.operatingActivities, cashFlowStatement.operatingActivities))
+                .withInvestingActivities(returnNewValueIfChanged(this.investingActivities, cashFlowStatement.investingActivities))
+                .withFinancingActivities(returnNewValueIfChanged(this.financingActivities, cashFlowStatement.financingActivities))
+                .withTotalCashFlow(returnNewValueIfChanged(this.totalCashFlow, cashFlowStatement.totalCashFlow))
                 .build();
     }
 
