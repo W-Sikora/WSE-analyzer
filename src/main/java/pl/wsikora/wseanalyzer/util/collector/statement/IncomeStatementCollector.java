@@ -10,7 +10,6 @@ public class IncomeStatementCollector extends StatementCollector<IncomeStatement
     public IncomeStatementCollector(Company company) {
         super(STATEMENT_PATH, company.getBusinessRadarAcronym());
         this.company = company;
-
     }
 
     @Override
