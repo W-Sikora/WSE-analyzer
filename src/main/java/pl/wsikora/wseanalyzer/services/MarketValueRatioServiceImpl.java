@@ -1,53 +1,17 @@
 package pl.wsikora.wseanalyzer.services;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import pl.wsikora.wseanalyzer.controllers.api.exception.ResourceNotFoundException;
 import pl.wsikora.wseanalyzer.model.MarketValueRatio;
 import pl.wsikora.wseanalyzer.repositories.MarketValueRatioRepository;
 
-import java.util.List;
-import java.util.Optional;
-
 @Service
-public class MarketValueRatioServiceImpl implements MarketValueRatioService {
+public class MarketValueRatioServiceImpl extends CrudServiceImpl<MarketValueRatio> implements MarketValueRatioService {
 
     private final MarketValueRatioRepository repository;
 
     public MarketValueRatioServiceImpl(MarketValueRatioRepository repository) {
+        super(repository);
         this.repository = repository;
-    }
-
-    @Override
-    public List<MarketValueRatio> getPart(Pageable pageable) {
-        return repository.findAll(pageable)
-                .toList();
-    }
-
-    @Override
-    public Optional<MarketValueRatio> getSingle(long id) {
-        return repository.findById(id);
-    }
-
-    @Override
-    public MarketValueRatio create(MarketValueRatio marketValueRatio) {
-        return repository.save(marketValueRatio);
-    }
-
-    @Override
-    public MarketValueRatio update(long id, MarketValueRatio marketValueRatio) {
-        return repository.findById(id)
-                .map(existing -> repository.save(existing.merge(marketValueRatio)))
-                .orElseThrow(() -> new ResourceNotFoundException(MarketValueRatio.class, id));
-    }
-
-    @Override
-    public void delete(long id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-        } else {
-            throw new ResourceNotFoundException(MarketValueRatio.class, id);
-        }
     }
 
 }

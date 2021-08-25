@@ -1,53 +1,17 @@
 package pl.wsikora.wseanalyzer.services;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import pl.wsikora.wseanalyzer.controllers.api.exception.ResourceNotFoundException;
 import pl.wsikora.wseanalyzer.model.Shareholder;
 import pl.wsikora.wseanalyzer.repositories.ShareholderRepository;
 
-import java.util.List;
-import java.util.Optional;
-
 @Service
-public class ShareholderServiceImpl  implements ShareholderService {
+public class ShareholderServiceImpl extends CrudServiceImpl<Shareholder> implements ShareholderService {
 
     private final ShareholderRepository repository;
 
     public ShareholderServiceImpl(ShareholderRepository repository) {
+        super(repository);
         this.repository = repository;
-    }
-
-    @Override
-    public List<Shareholder> getPart(Pageable pageable) {
-        return repository.findAll(pageable)
-                .toList();
-    }
-
-    @Override
-    public Optional<Shareholder> getSingle(long id) {
-        return repository.findById(id);
-    }
-
-    @Override
-    public Shareholder create(Shareholder shareholder) {
-        return repository.save(shareholder);
-    }
-
-    @Override
-    public Shareholder update(long id, Shareholder shareholder) {
-        return repository.findById(id)
-                .map(existing -> repository.save(existing.merge(shareholder)))
-                .orElseThrow(() -> new ResourceNotFoundException(Shareholder.class, id));
-    }
-
-    @Override
-    public void delete(long id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-        } else {
-            throw new ResourceNotFoundException(Shareholder.class, id);
-        }
     }
 
 }
