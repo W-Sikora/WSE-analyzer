@@ -1,11 +1,12 @@
 package pl.wsikora.wseanalyzer.services;
 
 import org.springframework.data.domain.Pageable;
+import pl.wsikora.wseanalyzer.model.EntityClass;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface CrudService <T> {
+public interface CrudService <T extends EntityClass> {
 
     List<T> getPart(Pageable pageable);
 

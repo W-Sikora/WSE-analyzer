@@ -2,11 +2,12 @@ package pl.wsikora.wseanalyzer.services;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import pl.wsikora.wseanalyzer.model.EntityClass;
 
 import java.util.List;
 import java.util.Optional;
 
-public abstract class CrudServiceImpl<T> implements CrudService<T> {
+public abstract class CrudServiceImpl<T extends EntityClass> implements CrudService<T> {
 
     private final JpaRepository<T, Long> repository;
 
@@ -27,11 +28,7 @@ public abstract class CrudServiceImpl<T> implements CrudService<T> {
         return repository.save(t);
     }
 
-    public T update(long id, T t) {
-        return repository.findById(id)
-                .map(repository::save)
-                .orElseThrow(() -> new IllegalArgumentException(""));
-    }
+    public abstract T update(long id, T t);
 
     public void delete(long id) {
         if (repository.existsById(id)) {
