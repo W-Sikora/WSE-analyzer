@@ -1,23 +1,11 @@
 package pl.wsikora.wseanalyzer.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.function.Consumer;
-
-import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "activity_tags")
-@JsonDeserialize(builder = ActivityTag.Builder.class)
-public class ActivityTag implements ModelEntity {
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private Long id;
+public class ActivityTag extends EntityClass {
 
     @Column(name = "tag_name", unique = true)
     private String tagName;
@@ -25,50 +13,12 @@ public class ActivityTag implements ModelEntity {
     public ActivityTag() {
     }
 
-    @JsonPOJOBuilder
-    public static final class Builder {
-        private final List<Consumer<ActivityTag>> operations;
-
-        private Builder() {
-            operations = new ArrayList<>();
-        }
-
-        public Builder withId(Long id) {
-            operations.add(e -> e.id = id);
-            return this;
-        }
-
-        public Builder withTagName(String tagName) {
-            operations.add(e -> e.tagName = tagName);
-            return this;
-        }
-
-        public ActivityTag build() {
-            ActivityTag activityTag = new ActivityTag();
-            operations.forEach(operation -> operation.accept(activityTag));
-            return activityTag;
-        }
-
-    }
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public ActivityTag merge(ActivityTag activityTag) {
-        return ActivityTag.builder()
-                .withId(this.id)
-                .withTagName(returnNewValueIfChanged(this.tagName, activityTag.tagName))
-                .build();
-    }
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
     public String getTagName() {
         return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 
     @Override
@@ -76,19 +26,19 @@ public class ActivityTag implements ModelEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ActivityTag that = (ActivityTag) o;
-        return Objects.equals(id, that.id) &&
+        return Objects.equals(getId(), that.getId()) &&
                 Objects.equals(tagName, that.tagName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, tagName);
+        return Objects.hash(getId(), tagName);
     }
 
     @Override
     public String toString() {
         return "ActivityTag{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", tagName='" + tagName + '\'' +
                 '}';
     }

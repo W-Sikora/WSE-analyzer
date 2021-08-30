@@ -1,26 +1,13 @@
 package pl.wsikora.wseanalyzer.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-
 import javax.persistence.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.function.Consumer;
-
-import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "shareholdings")
-@JsonDeserialize(builder = Shareholding.Builder.class)
-public class Shareholding implements ModelEntity {
-
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private Long id;
+public class Shareholding extends EntityClass {
 
     @OneToOne
     @JoinColumn(name = "company_id", unique = true)
@@ -39,66 +26,6 @@ public class Shareholding implements ModelEntity {
     public Shareholding() {
     }
 
-    @JsonPOJOBuilder
-    public static final class Builder {
-        private final List<Consumer<Shareholding>> operations;
-
-        private Builder() {
-            operations = new ArrayList<>();
-        }
-
-        public Builder withId(Long id) {
-            operations.add(e -> e.id = id);
-            return this;
-        }
-
-        public Builder withCompany(Company company) {
-            operations.add(e -> e.company = company);
-            return this;
-        }
-
-        public Builder withShareholder(Shareholder shareholder) {
-            operations.add(e -> e.shareholder = shareholder);
-            return this;
-        }
-
-        public Builder withSharesHeld(Long sharesHeld) {
-            operations.add(e -> e.sharesHeld = sharesHeld);
-            return this;
-        }
-
-        public Builder withLatestUpdate(LocalDate latestUpdate) {
-            operations.add(e -> e.latestUpdate = latestUpdate);
-            return this;
-        }
-
-        public Shareholding build() {
-            Shareholding shareholding = new Shareholding();
-            operations.forEach(operation -> operation.accept(shareholding));
-            return shareholding;
-        }
-
-    }
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public Shareholding merge(Shareholding shareholding) {
-        return Shareholding.builder()
-                .withId(this.id)
-                .withCompany(returnNewValueIfChanged(this.company, shareholding.company))
-                .withShareholder(returnNewValueIfChanged(this.shareholder, shareholding.shareholder))
-                .withSharesHeld(returnNewValueIfChanged(this.sharesHeld, shareholding.sharesHeld))
-                .withLatestUpdate(returnNewValueIfChanged(this.latestUpdate, shareholding.latestUpdate))
-                .build();
-    }
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
     public Company getCompany() {
         return company;
     }
@@ -115,12 +42,28 @@ public class Shareholding implements ModelEntity {
         return latestUpdate;
     }
 
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public void setShareholder(Shareholder shareholder) {
+        this.shareholder = shareholder;
+    }
+
+    public void setSharesHeld(Long sharesHeld) {
+        this.sharesHeld = sharesHeld;
+    }
+
+    public void setLatestUpdate(LocalDate latestUpdate) {
+        this.latestUpdate = latestUpdate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Shareholding that = (Shareholding) o;
-        return Objects.equals(id, that.id) &&
+        return Objects.equals(getId(), that.getId()) &&
                 Objects.equals(company, that.company) &&
                 Objects.equals(shareholder, that.shareholder) &&
                 Objects.equals(sharesHeld, that.sharesHeld) &&
@@ -129,13 +72,13 @@ public class Shareholding implements ModelEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, company, shareholder, sharesHeld, latestUpdate);
+        return Objects.hash(getId(), company, shareholder, sharesHeld, latestUpdate);
     }
 
     @Override
     public String toString() {
         return "Shareholding{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", company=" + company +
                 ", shareholder=" + shareholder +
                 ", sharesHeld=" + sharesHeld +

@@ -1,25 +1,12 @@
 package pl.wsikora.wseanalyzer.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.function.Consumer;
-
-import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "popularities")
-@JsonDeserialize(builder = Popularity.Builder.class)
-public class Popularity implements ModelEntity {
-
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private Long id;
+public class Popularity extends EntityClass {
 
     @ManyToOne
     @JoinColumn(name = "company_id")
@@ -34,65 +21,6 @@ public class Popularity implements ModelEntity {
     private Short businessRadarRankingPosition;
 
     public Popularity() {
-    }
-
-    @JsonPOJOBuilder
-    public static final class Builder {
-        private final List<Consumer<Popularity>> operations;
-
-        private Builder() {
-            operations = new ArrayList<>();
-        }
-
-        public Builder withId(Long id) {
-            operations.add(e -> e.id = id);
-            return this;
-        }
-
-        public Builder withCompany(Company company) {
-            operations.add(e -> e.company = company);
-            return this;
-        }
-
-        public Builder withDate(LocalDate date) {
-            operations.add(e -> e.date = date);
-            return this;
-        }
-
-        public Builder withBankerRankingPosition(Short bankerRankingPosition) {
-            operations.add(e -> e.bankerRankingPosition = bankerRankingPosition);
-            return this;
-        }
-
-        public Builder withBusinessRadarRankingPosition(Short businessRadarRankingPosition) {
-            operations.add(e -> e.businessRadarRankingPosition = businessRadarRankingPosition);
-            return this;
-        }
-
-        public Popularity build() {
-            Popularity popularity = new Popularity();
-            operations.forEach(operation -> operation.accept(popularity));
-            return popularity;
-        }
-
-    }
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public Popularity merge(Popularity popularity) {
-        return Popularity.builder()
-                .withId(this.id)
-                .withCompany(returnNewValueIfChanged(this.company, popularity.company))
-                .withDate(returnNewValueIfChanged(this.date, popularity.date))
-                .withBankerRankingPosition(returnNewValueIfChanged(this.bankerRankingPosition, popularity.bankerRankingPosition))
-                .withBusinessRadarRankingPosition(returnNewValueIfChanged(this.businessRadarRankingPosition, popularity.businessRadarRankingPosition))
-                .build();
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public Company getCompany() {
@@ -111,12 +39,28 @@ public class Popularity implements ModelEntity {
         return businessRadarRankingPosition;
     }
 
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public void setBankerRankingPosition(Short bankerRankingPosition) {
+        this.bankerRankingPosition = bankerRankingPosition;
+    }
+
+    public void setBusinessRadarRankingPosition(Short businessRadarRankingPosition) {
+        this.businessRadarRankingPosition = businessRadarRankingPosition;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Popularity that = (Popularity) o;
-        return Objects.equals(id, that.id) &&
+        return Objects.equals(getId(), that.getId()) &&
                 Objects.equals(company, that.company) &&
                 Objects.equals(date, that.date) &&
                 Objects.equals(bankerRankingPosition, that.bankerRankingPosition) &&
@@ -125,13 +69,13 @@ public class Popularity implements ModelEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, company, date, bankerRankingPosition, businessRadarRankingPosition);
+        return Objects.hash(getId(), company, date, bankerRankingPosition, businessRadarRankingPosition);
     }
 
     @Override
     public String toString() {
         return "Popularity{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", company=" + company +
                 ", date=" + date +
                 ", bankerRankingPosition=" + bankerRankingPosition +

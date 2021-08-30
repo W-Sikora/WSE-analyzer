@@ -3,22 +3,16 @@ package pl.wsikora.wseanalyzer.model;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
 @MappedSuperclass
-public abstract class Statement {
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    protected Long id;
+public abstract class Statement extends EntityClass {
 
     @ManyToOne
     @JoinColumn(name = "company_id")
-    protected Company company;
+    private Company company;
 
-    protected LocalDate date;
+    private LocalDate date;
 
-    public Long getId() {
-        return id;
+    public Statement() {
     }
 
     public Company getCompany() {
@@ -27,6 +21,14 @@ public abstract class Statement {
 
     public LocalDate getDate() {
         return date;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
 }

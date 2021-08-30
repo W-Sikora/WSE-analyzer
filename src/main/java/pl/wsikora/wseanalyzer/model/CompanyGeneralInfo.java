@@ -1,32 +1,22 @@
 package pl.wsikora.wseanalyzer.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.function.Consumer;
-
-import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "companies_general_info")
-@JsonDeserialize(builder = CompanyGeneralInfo.Builder.class)
-public class CompanyGeneralInfo implements ModelEntity {
-
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private Long id;
+public class CompanyGeneralInfo extends EntityClass {
 
     @OneToOne
     @JoinColumn(name = "company_id")
     private Company company;
 
     @Column(name = "debut_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate debutDate;
 
     @Column(name = "shares_number")
@@ -40,78 +30,6 @@ public class CompanyGeneralInfo implements ModelEntity {
     private Integer employeesNumber;
 
     public CompanyGeneralInfo() {
-    }
-
-    @JsonPOJOBuilder
-    public static final class Builder {
-        private final List<Consumer<CompanyGeneralInfo>> operations;
-
-        private Builder() {
-            operations = new ArrayList<>();
-        }
-
-        public Builder withId(long id) {
-            operations.add(e -> e.id = id);
-            return this;
-        }
-
-        public Builder withCompany(Company company) {
-            operations.add(e -> e.company = company);
-            return this;
-        }
-
-        public Builder withDebutDate(LocalDate debutDate) {
-            operations.add(e -> e.debutDate = debutDate);
-            return this;
-        }
-
-        public Builder withSharesNumber(Long sharesNumber) {
-            operations.add(e -> e.sharesNumber = sharesNumber);
-            return this;
-        }
-
-        public Builder withLocation(String location) {
-            operations.add(e -> e.location = location);
-            return this;
-        }
-
-        public Builder withCeo(String ceo) {
-            operations.add(e -> e.ceo = ceo);
-            return this;
-        }
-
-        public Builder withEmployeesNumber(Integer employeesNumber) {
-            operations.add(e -> e.employeesNumber = employeesNumber);
-            return this;
-        }
-
-        public CompanyGeneralInfo build() {
-            CompanyGeneralInfo companyGeneralInfo = new CompanyGeneralInfo();
-            operations.forEach(operation -> operation.accept(companyGeneralInfo));
-            return companyGeneralInfo;
-        }
-
-    }
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public CompanyGeneralInfo merge(CompanyGeneralInfo companyGeneralInfo) {
-        return CompanyGeneralInfo.builder()
-                .withId(this.id)
-                .withCompany(returnNewValueIfChanged(this.company, companyGeneralInfo.company))
-                .withDebutDate(returnNewValueIfChanged(this.debutDate, companyGeneralInfo.debutDate))
-                .withSharesNumber(returnNewValueIfChanged(this.sharesNumber, companyGeneralInfo.sharesNumber))
-                .withLocation(returnNewValueIfChanged(this.location, companyGeneralInfo.location))
-                .withCeo(returnNewValueIfChanged(this.ceo, companyGeneralInfo.ceo))
-                .withEmployeesNumber(returnNewValueIfChanged(this.employeesNumber, companyGeneralInfo.employeesNumber))
-                .build();
-    }
-
-    @Override
-    public Long getId() {
-        return id;
     }
 
     public Company getCompany() {
@@ -138,12 +56,36 @@ public class CompanyGeneralInfo implements ModelEntity {
         return employeesNumber;
     }
 
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public void setDebutDate(LocalDate debutDate) {
+        this.debutDate = debutDate;
+    }
+
+    public void setSharesNumber(Long sharesNumber) {
+        this.sharesNumber = sharesNumber;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setCeo(String ceo) {
+        this.ceo = ceo;
+    }
+
+    public void setEmployeesNumber(Integer employeesNumber) {
+        this.employeesNumber = employeesNumber;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CompanyGeneralInfo that = (CompanyGeneralInfo) o;
-        return Objects.equals(id, that.id) &&
+        return Objects.equals(getId(), that.getId()) &&
                 Objects.equals(company, that.company) &&
                 Objects.equals(debutDate, that.debutDate) &&
                 Objects.equals(sharesNumber, that.sharesNumber) &&
@@ -154,13 +96,13 @@ public class CompanyGeneralInfo implements ModelEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, company, debutDate, sharesNumber, location, ceo, employeesNumber);
+        return Objects.hash(getId(), company, debutDate, sharesNumber, location, ceo, employeesNumber);
     }
 
     @Override
     public String toString() {
         return "CompanyGeneralInfo{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", company=" + company +
                 ", debutDate=" + debutDate +
                 ", sharesNumber=" + sharesNumber +

@@ -6,29 +6,22 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
 @MappedSuperclass
-public abstract class Ratio {
-    
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    protected Long id;
+public abstract class Ratio extends EntityClass {
 
     @ManyToOne
     @JoinColumn(name = "company_id")
-    protected Company company;
+    private Company company;
 
-    protected LocalDate date;
+    private LocalDate date;
 
-    protected String name;
+    private String name;
 
-    protected String shortcut;
+    private String shortcut;
 
-    protected BigDecimal value;
+    private BigDecimal value;
 
-    public Long getId() {
-        return id;
+    public Ratio() {
     }
 
     public Company getCompany() {
@@ -51,22 +44,53 @@ public abstract class Ratio {
         return value;
     }
 
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setShortcut(String shortcut) {
+        this.shortcut = shortcut;
+    }
+
+    public void setValue(BigDecimal value) {
+        this.value = value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Ratio ratio = (Ratio) o;
-        return Objects.equals(id, ratio.id) &&
-                Objects.equals(company, ratio.company) &&
-                Objects.equals(date, ratio.date) &&
-                Objects.equals(name, ratio.name) &&
-                Objects.equals(shortcut, ratio.shortcut) &&
-                Objects.equals(value, ratio.value);
+        Ratio that = (Ratio) o;
+        return Objects.equals(getId(), that.getId()) &&
+                Objects.equals(company, that.company) &&
+                Objects.equals(date, that.date) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(shortcut, that.shortcut) &&
+                Objects.equals(value, that.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, company, date, name, shortcut, value);
+        return Objects.hash(getId(), company, date, name, shortcut, value);
+    }
+
+    @Override
+    public String toString() {
+        return "Ratio{" +
+                "company=" + company +
+                ", date=" + date +
+                ", name='" + name + '\'' +
+                ", shortcut='" + shortcut + '\'' +
+                ", value=" + value +
+                '}';
     }
 
 }

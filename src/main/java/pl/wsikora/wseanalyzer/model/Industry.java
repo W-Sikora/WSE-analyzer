@@ -42,8 +42,10 @@ public enum  Industry {
     RECEIVABLES("Wierzytelności"),
     HOME_FURNISHINGS("Wyposażenie domu"),
     ENTERPRISE_SUPPLIES("Zaopatrzenie przedsiębiorstw");
+    private final String name;
 
     Industry(String name) {
+        this.name = name;
     }
 
     public String getName() {

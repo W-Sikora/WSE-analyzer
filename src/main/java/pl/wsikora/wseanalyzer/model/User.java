@@ -1,24 +1,12 @@
 package pl.wsikora.wseanalyzer.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-
 import javax.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.function.Consumer;
-
-import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "users")
-@JsonDeserialize(builder = User.Builder.class)
-public class User implements ModelEntity {
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private Long id;
+public class User extends EntityClass {
 
     private String nickname;
 
@@ -26,71 +14,7 @@ public class User implements ModelEntity {
 
     private String password;
 
-    @OneToMany
-    @JoinColumn(name = "company_id")
-    private List<Company> companiesFollowed;
-
     public User() {
-    }
-
-    @JsonPOJOBuilder
-    public static final class Builder {
-        private final List<Consumer<User>> operations;
-
-        private Builder() {
-            operations = new ArrayList<>();
-        }
-
-        public Builder withId(Long id) {
-            operations.add(e -> e.id = id);
-            return this;
-        }
-
-        public Builder withNickname(String nickname) {
-            operations.add(e -> e.nickname = nickname);
-            return this;
-        }
-
-        public Builder withEmail(String email) {
-            operations.add(e -> e.email = email);
-            return this;
-        }
-
-        public Builder withPassword(String password) {
-            operations.add(e -> e.password = password);
-            return this;
-        }
-
-        public Builder withCompaniesFollowed(List<Company> companiesFollowed) {
-            operations.add(e -> e.companiesFollowed = companiesFollowed);
-            return this;
-        }
-
-        public User build() {
-            User user = new User();
-            operations.forEach(operation -> operation.accept(user));
-            return user;
-        }
-
-    }
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public User merge(User user) {
-        return User.builder()
-                .withId(this.id)
-                .withNickname(returnNewValueIfChanged(this.nickname, user.nickname))
-                .withEmail(returnNewValueIfChanged(this.email, user.email))
-                .withPassword(returnNewValueIfChanged(this.password, user.password))
-                .withCompaniesFollowed(returnNewValueIfChanged(this.companiesFollowed, user.companiesFollowed))
-                .build();
-    }
-
-    @Override
-    public Long getId() {
-        return id;
     }
 
     public String getNickname() {
@@ -105,8 +29,16 @@ public class User implements ModelEntity {
         return password;
     }
 
-    public List<Company> getCompaniesFollowed() {
-        return companiesFollowed;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
@@ -114,26 +46,24 @@ public class User implements ModelEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) &&
+        return Objects.equals(getId(), user.getId()) &&
                 Objects.equals(nickname, user.nickname) &&
                 Objects.equals(email, user.email) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(companiesFollowed, user.companiesFollowed);
+                Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nickname, email, password, companiesFollowed);
+        return Objects.hash(getId(), nickname, email, password);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", nickname='" + nickname + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", companiesFollowed=" + companiesFollowed +
                 '}';
     }
 

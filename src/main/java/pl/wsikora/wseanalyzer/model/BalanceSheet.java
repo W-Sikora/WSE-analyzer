@@ -1,21 +1,13 @@
 package pl.wsikora.wseanalyzer.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
-
+import java.util.Objects;
 
 @Entity
 @Table(name = "balance_sheets")
-@JsonDeserialize(builder = BalanceSheet.Builder.class)
-public class BalanceSheet extends Statement implements ModelEntity {
+public class BalanceSheet extends Statement {
 
     @Column(name = "fixed_asset")
     private Long fixedAsset;
@@ -48,109 +40,6 @@ public class BalanceSheet extends Statement implements ModelEntity {
     private Long totalLiabilitiesAndEquity;
 
     public BalanceSheet() {
-    }
-
-    @JsonPOJOBuilder
-    public static final class Builder {
-        private final List<Consumer<BalanceSheet>> operations;
-
-        private Builder() {
-            operations = new ArrayList<>();
-        }
-
-        public Builder withId(Long id) {
-            operations.add(e -> e.id = id);
-            return this;
-        }
-
-        public Builder withCompany(Company company) {
-            operations.add(e -> e.company = company);
-            return this;
-        }
-
-        public Builder withDate(LocalDate date) {
-            operations.add(e -> e.date = date);
-            return this;
-        }
-
-        public Builder withFixedAsset(Long fixedAsset) {
-            operations.add(e -> e.fixedAsset = fixedAsset);
-            return this;
-        }
-
-        public Builder withCurrentAsset(Long currentAsset) {
-            operations.add(e -> e.currentAsset = currentAsset);
-            return this;
-        }
-
-        public Builder withTotalAssets(Long totalAssets) {
-            operations.add(e -> e.totalAssets = totalAssets);
-            return this;
-        }
-
-        public Builder withCurrentReceivables(Long currentReceivables) {
-            operations.add(e -> e.currentReceivables = currentReceivables);
-            return this;
-        }
-
-        public Builder withCurrentInvestments(Long currentInvestments) {
-            operations.add(e -> e.currentInvestments = currentInvestments);
-            return this;
-        }
-
-        public Builder withCashAndEquivalents(Long cashAndEquivalents) {
-            operations.add(e -> e.cashAndEquivalents = cashAndEquivalents);
-            return this;
-        }
-
-        public Builder withShareholdersEquity(Long shareholdersEquity) {
-            operations.add(e -> e.shareholdersEquity = shareholdersEquity);
-            return this;
-        }
-
-        public Builder withLongTermLiabilities(Long longTermLiabilities) {
-            operations.add(e -> e.longTermLiabilities = longTermLiabilities);
-            return this;
-        }
-
-        public Builder withCurrentLiabilities(Long currentLiabilities) {
-            operations.add(e -> e.currentLiabilities = currentLiabilities);
-            return this;
-        }
-
-        public Builder withTotalLiabilitiesAndEquity(Long totalLiabilitiesAndEquity) {
-            operations.add(e -> e.totalLiabilitiesAndEquity = totalLiabilitiesAndEquity);
-            return this;
-        }
-
-        public BalanceSheet build() {
-            BalanceSheet balanceSheet = new BalanceSheet();
-            operations.forEach(operation -> operation.accept(balanceSheet));
-            return balanceSheet;
-        }
-
-    }
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public BalanceSheet merge(BalanceSheet balanceSheet) {
-        return BalanceSheet.builder()
-                .withId(this.id)
-                .withCompany(returnNewValueIfChanged(this.company, balanceSheet.company))
-                .withDate(returnNewValueIfChanged(this.date, balanceSheet.date))
-                .withFixedAsset(returnNewValueIfChanged(this.fixedAsset, balanceSheet.fixedAsset))
-                .withCurrentAsset(returnNewValueIfChanged(this.currentAsset, balanceSheet.currentAsset))
-                .withTotalAssets(returnNewValueIfChanged(this.totalAssets, balanceSheet.totalAssets))
-                .withCurrentReceivables(returnNewValueIfChanged(this.currentReceivables, balanceSheet.currentReceivables))
-                .withCurrentInvestments(returnNewValueIfChanged(this.currentInvestments, balanceSheet.currentInvestments))
-                .withCashAndEquivalents(returnNewValueIfChanged(this.cashAndEquivalents, balanceSheet.cashAndEquivalents))
-                .withShareholdersEquity(returnNewValueIfChanged(this.shareholdersEquity, balanceSheet.shareholdersEquity))
-                .withLongTermLiabilities(returnNewValueIfChanged(this.longTermLiabilities, balanceSheet.longTermLiabilities))
-                .withCurrentLiabilities(returnNewValueIfChanged(this.currentLiabilities, balanceSheet.currentLiabilities))
-                .withTotalLiabilitiesAndEquity(returnNewValueIfChanged(this.totalLiabilitiesAndEquity, balanceSheet.totalLiabilitiesAndEquity))
-                .build();
     }
 
     public Long getFixedAsset() {
@@ -193,12 +82,77 @@ public class BalanceSheet extends Statement implements ModelEntity {
         return totalLiabilitiesAndEquity;
     }
 
+    public void setFixedAsset(Long fixedAsset) {
+        this.fixedAsset = fixedAsset;
+    }
+
+    public void setCurrentAsset(Long currentAsset) {
+        this.currentAsset = currentAsset;
+    }
+
+    public void setTotalAssets(Long totalAssets) {
+        this.totalAssets = totalAssets;
+    }
+
+    public void setCurrentReceivables(Long currentReceivables) {
+        this.currentReceivables = currentReceivables;
+    }
+
+    public void setCurrentInvestments(Long currentInvestments) {
+        this.currentInvestments = currentInvestments;
+    }
+
+    public void setCashAndEquivalents(Long cashAndEquivalents) {
+        this.cashAndEquivalents = cashAndEquivalents;
+    }
+
+    public void setShareholdersEquity(Long shareholdersEquity) {
+        this.shareholdersEquity = shareholdersEquity;
+    }
+
+    public void setLongTermLiabilities(Long longTermLiabilities) {
+        this.longTermLiabilities = longTermLiabilities;
+    }
+
+    public void setCurrentLiabilities(Long currentLiabilities) {
+        this.currentLiabilities = currentLiabilities;
+    }
+
+    public void setTotalLiabilitiesAndEquity(Long totalLiabilitiesAndEquity) {
+        this.totalLiabilitiesAndEquity = totalLiabilitiesAndEquity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BalanceSheet that = (BalanceSheet) o;
+        return Objects.equals(getId(), that.getId()) &&
+                Objects.equals(getCompany(), that.getCompany()) &&
+                Objects.equals(getDate(), that.getDate()) &&
+                Objects.equals(fixedAsset, that.fixedAsset) &&
+                Objects.equals(currentAsset, that.currentAsset) &&
+                Objects.equals(totalAssets, that.totalAssets) &&
+                Objects.equals(currentReceivables, that.currentReceivables) &&
+                Objects.equals(currentInvestments, that.currentInvestments) &&
+                Objects.equals(cashAndEquivalents, that.cashAndEquivalents) &&
+                Objects.equals(shareholdersEquity, that.shareholdersEquity) &&
+                Objects.equals(longTermLiabilities, that.longTermLiabilities) &&
+                Objects.equals(currentLiabilities, that.currentLiabilities) &&
+                Objects.equals(totalLiabilitiesAndEquity, that.totalLiabilitiesAndEquity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getCompany(), getDate(), fixedAsset, currentAsset, totalAssets, currentReceivables, currentInvestments, cashAndEquivalents, shareholdersEquity, longTermLiabilities, currentLiabilities, totalLiabilitiesAndEquity);
+    }
+
     @Override
     public String toString() {
         return "BalanceSheet{" +
-                "id=" + id +
-                ", company=" + company +
-                ", date=" + date +
+                "id=" + getId() +
+                ", company=" + getCompany() +
+                ", date=" + getDate() +
                 ", fixedAsset=" + fixedAsset +
                 ", currentAsset=" + currentAsset +
                 ", totalAssets=" + totalAssets +
