@@ -1,52 +1,44 @@
 package pl.wsikora.wseanalyzer.controllers.api.exception;
 
+import org.springframework.http.HttpStatus;
+
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 public class ErrorDetail {
-    private String title;
-    private int status;
-    private String detail;
-    private long timeStamp;
-    private String developerMessage;
+    private final String message;
+    private final Throwable throwable;
+    private final HttpStatus httpStatus;
+    private final ZonedDateTime timeStamp;
 
-    public ErrorDetail() {
+    public <T extends RuntimeException> ErrorDetail(T exception, HttpStatus httpStatus) {
+        this.message = exception.getMessage();
+        this.throwable = exception;
+        this.httpStatus = httpStatus;
+        this.timeStamp = ZonedDateTime.now(ZoneId.of("CET"));
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-
-    public long getTimeStamp() {
-        return timeStamp;
-    }
-
-    public void setTimeStamp(long timeStamp) {
+    public ErrorDetail(String message, Throwable throwable, HttpStatus httpStatus, ZonedDateTime timeStamp) {
+        this.message = message;
+        this.throwable = throwable;
+        this.httpStatus = httpStatus;
         this.timeStamp = timeStamp;
     }
 
-    public String getDeveloperMessage() {
-        return developerMessage;
+    public String getMessage() {
+        return message;
     }
 
-    public void setDeveloperMessage(String developerMessage) {
-        this.developerMessage = developerMessage;
+    public Throwable getThrowable() {
+        return throwable;
     }
+
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
+    }
+
+    public ZonedDateTime getTimeStamp() {
+        return timeStamp;
+    }
+
 }
