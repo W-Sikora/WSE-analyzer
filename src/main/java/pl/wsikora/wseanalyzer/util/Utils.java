@@ -1,9 +1,6 @@
 package pl.wsikora.wseanalyzer.util;
 
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
-import java.time.LocalDateTime;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -25,6 +22,12 @@ public class Utils {
         } catch (InterruptedException interruptedException) {
             interruptedException.printStackTrace();
         }
+    }
+
+    public static <T> Class<T> getEntityType(Object object) {
+        return (Class<T>) ((ParameterizedType) object.getClass()
+                .getGenericSuperclass())
+                .getActualTypeArguments()[0];
     }
 
 }
